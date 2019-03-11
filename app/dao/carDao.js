@@ -19,7 +19,7 @@ class CarDao {
      * @return entity
      */
     findById(id) {
-        let sqlRequest = "SELECT id, maker, model, year, driver FROM car WHERE id=$id";
+        let sqlRequest = "SELECT * FROM car WHERE id=$id";
         let sqlParams = {$id: id};
         return this.common.findOne(sqlRequest, sqlParams).then(row =>
             new Car(row.id, row.maker, row.model, row.year, row.driver));
