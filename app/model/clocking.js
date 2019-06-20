@@ -1,15 +1,16 @@
 /**
- * Employee Entity (ES6 Class)
+ * Clocking Entity (ES6 Class)
  */
 
-class Employee {
-  constructor(id, timeIn, timeOut, empID, empCalander) {
+class Clocking {
+  constructor(id, employee_id, reason_id, clock_in, clock_out, overtime) {
     this.id = id;
-    this.timeIn = timeIn;
-    this.timeOut = timeOut;
-    this.empID = empID;
-    this.empCalander = empCalander;
+    this.employee_id = employee_id;
+    this.reason_id = reason_id;
+    this.clock_in = clock_in;
+    this.clock_out = clock_out;
+    this.overtime = overtime;
   }
 }
 
-module.exports = Employee;
+module.exports = Clocking;

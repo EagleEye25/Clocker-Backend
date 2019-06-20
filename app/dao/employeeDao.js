@@ -22,7 +22,7 @@ class EmployeeDao {
 			let sqlRequest = "SELECT * FROM employee WHERE id=$id";
 			let sqlParams = {$id: id};
 			return this.common.findOne(sqlRequest, sqlParams).then(row =>
-				new Employee(row.id, row.name, row.surName, row.empID, row.phone, row.email, row.department, row.tagID)
+				new Employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id)
 			);
 	};
 }

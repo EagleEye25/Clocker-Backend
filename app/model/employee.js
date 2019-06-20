@@ -3,15 +3,13 @@
  */
 
 class Employee {
-  constructor(id, name, surName, empID, phone, email, department, tagID) {
+  constructor(id, name, admin, reporting_admin, password ,calender_id) {
     this.id = id;
     this.name = name;
-    this.surName = surName;
-    this.empID = empID;
-    this.phone = phone;
-    this.email = email;
-    this.department = department;
-    this.tagID = tagID;
+    this.admin = admin;
+    this.reporting_admin = reporting_admin;
+    this.password = password;
+    this.calender_id = calender_id;
   }
 }
 
