@@ -1,19 +1,19 @@
-/* Load Car Data Access Object */
-const EmployeeDao = require('../dao/employeeDao');
+/* Load Employee_Card Data Access Object */
+const E_CardDAO = require('../dao/employee_card');
 
 /* Load Controller Common function */
 const ControllerCommon = require('./common/controllerCommon');
 
 /* Load Employee entity */
-const Employee = require('../model/employee');
+const E_Card = require('../model/employee_card');
 
 /**
  * Car Controller
  */
-class EmployeeController {
+class Employee_Card {
 
 	constructor() {
-		this.employeeDao = new EmployeeDao();
+		this.dao = new E_CardDAO();
 		this.common = new ControllerCommon();
 	}
 
@@ -25,10 +25,10 @@ class EmployeeController {
     findById(req, res) {
 			let id = req.params.id;
 
-			this.employeeDao.findById(id)
-					.then(this.common.findSuccess(res))
-					.catch(this.common.findError(res));
+			this.dao.findById(id)
+        .then(this.common.findSuccess(res))
+        .catch(this.common.findError(res));
 	};
 }
 
-module.exports = EmployeeController;
+module.exports = Employee_Card;

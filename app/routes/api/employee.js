@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 /* Load controller */
-const EmployeeController = require('../../controller/employeeController');
-const employeeController = new EmployeeController();
+const Employee = require('../../controller/employee');
+const employee = new Employee();
 
 /**
  * Employee Entity routes
