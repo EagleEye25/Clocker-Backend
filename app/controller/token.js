@@ -17,17 +17,17 @@ class Token {
 		this.common = new ControllerCommon();
 	}
 
-	 /**
-     * Tries to find an entity using its Id / Primary Key
-     * @params req, res
-     * @return entity
-     */
-    findById(req, res) {
-			let id = req.params.id;
+	/**
+	 * Tries to find an entity using its Id / Primary Key
+	 * @params req, res
+	 * @return entity
+	 */
+	findById(req, res) {
+		let id = req.params.id;
 
-			this.dao.findById(id)
-        .then(this.common.findSuccess(res))
-        .catch(this.common.findError(res));
+		this.dao.findById(id)
+			.then(this.common.findSuccess(res))
+			.catch(this.common.findError(res));
 	};
 }
 

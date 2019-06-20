@@ -14,17 +14,16 @@ class Token {
 	}
 
 	/**
-     * Tries to find an entity using its Id / Primary Key
-     * @params id
-     * @return entity
-     */
-  //   findById(id) {
-	// 		let sqlRequest = "SELECT * FROM employee WHERE id=$id";
-	// 		let sqlParams = {$id: id};
-	// 		return this.common.findOne(sqlRequest, sqlParams).then(row =>
-	// 			new Employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id)
-	// 		);
-	// };
+	 * Tries to find an entity using its Id / Primary Key
+	 * @params id
+	 * @return entity
+	 */
+	async findById(id) {
+		let sqlRequest = "SELECT * FROM token WHERE id=$id";
+		let sqlParams = {$id: id};
+		const row = await this.common.findOne(sqlRequest, sqlParams);
+		return new token(row.id, row.token);
+	};
 }
 
 module.exports = Token;

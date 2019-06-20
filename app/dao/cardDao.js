@@ -14,17 +14,28 @@ class Card {
 	}
 
 	/**
-     * Tries to find an entity using its Id / Primary Key
-     * @params id
-     * @return entity
-     */
-  //   findById(id) {
-	// 		let sqlRequest = "SELECT * FROM employee WHERE id=$id";
-	// 		let sqlParams = {$id: id};
-	// 		return this.common.findOne(sqlRequest, sqlParams).then(row =>
-	// 			new Employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id)
-	// 		);
-	// };
+	 * Tries to find an entity using its Id / Primary Key
+	 * @params id
+	 * @return entity
+	 */
+	async findById(id) {
+		let sqlRequest = "SELECT * FROM card WHERE id=$id";
+		let sqlParams = {$id: id};
+		const row = await this.common.findOne(sqlRequest, sqlParams);
+		return new card(row.id, row.card_no);
+	};
+
+	/**
+	 * Tries to find an entity using its card_no
+	 * @params card_no
+	 * @return entity
+	 */
+	async findByCard_No(card_no) {
+		let sqlRequest = "SELECT * FROM card WHERE card_no=$card_no";
+		let sqlParams = {$card_no: card_no};
+		const row = await this.common.findOne(sqlRequest, sqlParams);
+		return new card(row.id, row.card_no);
+	};
 }
 
-module.exports = card;
+module.exports = Card;

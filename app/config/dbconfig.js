@@ -34,10 +34,10 @@ let init = function () {
 		")"
 	);
 
-	db.run("CREATE TABLE if not exists card (" +
-		" id INTEGER PRIMARY KEY AUTOINCREMENT," +
-		" card_no TEXT" +
-		")"
+	db.run(`CREATE TABLE if not exists card (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		card_no TEXT);
+		CREATE INDEX card_no ON card(card_no);`
 	);
 
 	db.run("CREATE TABLE if not exists calender (" +

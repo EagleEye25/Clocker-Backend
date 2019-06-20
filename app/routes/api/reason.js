@@ -12,4 +12,20 @@ const reason = new Reason();
 router.get('/:id', function (req, res) {
   reason.findById(req, res);
 });
+
+router.get('/', function (req, res) {
+  reason.findAll(res);
+});
+
+router.post('/create', function (req, res) {
+  reason.create(req, res);
+});
+
+router.put('/:id', function (req, res) {
+  reason.update(req, res);
+});
+
+router.delete('/:id', function (req, res) {
+  reason.deleteById(req, res);
+});
 module.exports = router;

@@ -14,32 +14,32 @@ class Employee {
 	}
 
 	/**
-     * Tries to find an entity using its Id / Primary Key
-     * @params id
-     * @return entity
-     */
-    async findById(id) {
-			let sqlRequest = "SELECT * FROM employee WHERE id=$id";
-			let sqlParams = {$id: id};
-			const row = await this.common.findOne(sqlRequest, sqlParams);
-			return new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id);
+	 * Tries to find an entity using its Id / Primary Key
+	 * @params id
+	 * @return entity
+	 */
+	async findById(id) {
+		let sqlRequest = "SELECT * FROM employee WHERE id=$id";
+		let sqlParams = {$id: id};
+		const row = await this.common.findOne(sqlRequest, sqlParams);
+		return new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id);
 	};
 
 	/**
-     * Tries to find all entities
-     * @return entity
-     */
-    async findAll() {
-			let sqlRequest = "SELECT * FROM employee";
-			const rows = await this.common.findAll(sqlRequest);
-			let employees = [];
-			for (const row of rows) {
-				employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id));
-			}
-			return employees;
-		};
+	 * Tries to find all entities
+	 * @return entity
+	 */
+	async findAll() {
+		let sqlRequest = "SELECT * FROM employee";
+		const rows = await this.common.findAll(sqlRequest);
+		let employees = [];
+		for (const row of rows) {
+			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id));
+		}
+		return employees;
+	};
 
-		/**
+	/**
 	 * Creates the given entity in the database
 	 * @params Employee
 	 * returns database insertion status

@@ -32,8 +32,10 @@ class controllerCommon {
     }
 
     findError(res) {
-        res.status(400); // Not found
-        return res.json("error 400");
+        return (error) => {
+            res.status(404);
+            res.json(error);
+        }
     }
 }
 
