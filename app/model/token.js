@@ -2,7 +2,7 @@
  * Token Entity (ES6 Class)
  */
 
-class Employee {
+class Token {
   constructor(id, token) {
     this.id = id;
     this.token = token;

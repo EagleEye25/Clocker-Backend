@@ -1,5 +1,5 @@
 /* Load employee_calender entity */
-const employee_calender = require('../model/employee_calander');
+const employee_calender = require('../model/employee_calender');
 
 /* Load DAO Common functions */
 const daoCommon = require('./commons/daoCommon');

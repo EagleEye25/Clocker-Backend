@@ -5,7 +5,7 @@ const E_CalenderDAO = require('../dao/employee_calender');
 const ControllerCommon = require('./common/controllerCommon');
 
 /* Load Employee entity */
-const E_Calender = require('../model/employee_calander');
+const E_Calender = require('../model/employee_calender');
 
 /**
  * Car Controller
