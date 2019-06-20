@@ -1,5 +1,5 @@
 /* Load Token Data Access Object */
-const TokenDAO = require('../dao/token');
+const TokenDAO = require('../dao/tokenDao');
 
 /* Load Controller Common function */
 const ControllerCommon = require('./common/controllerCommon');

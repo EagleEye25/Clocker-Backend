@@ -1,5 +1,5 @@
 /* Load Reason Data Access Object */
-const ReasonDAO = require('../dao/reason');
+const ReasonDAO = require('../dao/reasonDao');
 
 /* Load Controller Common function */
 const ControllerCommon = require('./common/controllerCommon');

@@ -1,5 +1,5 @@
 /* Load Clocking Data Access Object */
-const ClockingDAO = require('../dao/clocking');
+const ClockingDAO = require('../dao/clockingDao');
 
 /* Load Controller Common function */
 const ControllerCommon = require('./common/controllerCommon');

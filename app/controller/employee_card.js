@@ -1,5 +1,5 @@
 /* Load Employee_Card Data Access Object */
-const E_CardDAO = require('../dao/employee_card');
+const E_CardDAO = require('../dao/employee_cardDao');
 
 /* Load Controller Common function */
 const ControllerCommon = require('./common/controllerCommon');

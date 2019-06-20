@@ -1,5 +1,5 @@
 /* Load Card Data Access Object */
-const CardDAO = require('../dao/card');
+const CardDAO = require('../dao/cardDao');
 
 /* Load Controller Common function */
 const ControllerCommon = require('./common/controllerCommon');
