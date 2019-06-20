@@ -1,5 +1,5 @@
-/* Load Car entity */
-const Employee = require('../model/employee');
+/* Load Employee entity */
+const employee = require('../model/employee');
 
 /* Load DAO Common functions */
 const daoCommon = require('./commons/daoCommon');
@@ -7,7 +7,7 @@ const daoCommon = require('./commons/daoCommon');
 /**
  * Employee Data Access Object
  */
-class EmployeeDao {
+class Employee {
 
 	constructor() {
 		this.common = new daoCommon();
@@ -22,9 +22,9 @@ class EmployeeDao {
 			let sqlRequest = "SELECT * FROM employee WHERE id=$id";
 			let sqlParams = {$id: id};
 			return this.common.findOne(sqlRequest, sqlParams).then(row =>
-				new Employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id)
+				new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id)
 			);
 	};
 }
 
-module.exports = EmployeeDao;
+module.exports = Employee;
