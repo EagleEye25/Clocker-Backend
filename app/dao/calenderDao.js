@@ -14,17 +14,76 @@ class Calender {
 	}
 
 	/**
-     * Tries to find an entity using its Id / Primary Key
-     * @params id
-     * @return entity
-     */
-  //   findById(id) {
-	// 		let sqlRequest = "SELECT * FROM employee WHERE id=$id";
-	// 		let sqlParams = {$id: id};
-	// 		return this.common.findOne(sqlRequest, sqlParams).then(row =>
-	// 			new Employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id)
-	// 		);
-	// };
+	 * Tries to find an entity using its Id / Primary Key
+	 * @params id
+	 * @return entity
+	 */
+	async findById(id) {
+		let sqlRequest = "SELECT * FROM calender WHERE id=$id";
+		let sqlParams = {$id: id};
+		const row = await this.common.findOne(sqlRequest, sqlParams);
+		return new calender(row.id, row.description, row.work);
+	};
+
+	/**
+	 * Tries to find all entities
+	 * @return entity
+	 */
+	async findAll() {
+		let sqlRequest = "SELECT * FROM calender";
+		const rows = await this.common.findAll(sqlRequest);
+		let calenders = [];
+		for (const row of rows) {
+			calenders.push(new calender(row.id, row.description, row.work));
+		}
+		return calenders;
+	};
+
+	/**
+	 * Creates the given entity in the database
+	 * @params Calender
+	 * returns database insertion status
+	 */
+	create(calender) {
+		let sqlRequest = `INSERT into calender (name, description)
+				VALUES ($name, $description)`;
+
+		let sqlParams = {
+			$name: calender.name,
+			$description: calender.description
+		};
+		return this.common.run(sqlRequest, sqlParams);
+	};
+
+	/**
+	 * Updates the given entity in the database
+	 * @params Calender
+	 * @return true if the entity has been updated, false if not found and not updated
+	 */
+	update(calender) {
+		let sqlRequest = `UPDATE calender SET
+			name=$name,
+			description=$description
+			WHERE id=$id`;
+
+		let sqlParams = {
+			$id: calender.id,
+			$name: calender.name,
+			$description: calender.description
+		};
+		return this.common.run(sqlRequest, sqlParams);
+	};
+
+	/**
+	 * Deletes an entity using its Id / Primary Key
+	 * @params id
+	 * returns database deletion status
+	 */
+	deleteById(id) {
+		let sqlRequest = "DELETE FROM calender WHERE id=$id";
+		let sqlParams = {$id: id};
+		return this.common.run(sqlRequest, sqlParams);
+	};
 }
 
 module.exports = Calender;
