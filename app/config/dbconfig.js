@@ -75,7 +75,7 @@ let init = function () {
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		employee_id INTEGER,
 		card_id INTEGER,
-		issed_at DATETIME,
+		issued_at DATETIME,
 		active BOOL,
 		FOREIGN KEY(employee_id) REFERENCES employee(id),
 		FOREIGN KEY(card_id) REFERENCES card(id))`

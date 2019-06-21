@@ -12,4 +12,20 @@ const calender = new Calender();
 router.get('/:id', function (req, res) {
   calender.findById(req, res);
 });
+
+router.get('/', function (req, res) {
+  calender.findAll(res);
+});
+
+router.post('/create', function (req, res) {
+  calender.create(req, res);
+});
+
+router.put('/:id', function (req, res) {
+  calender.update(req, res);
+});
+
+router.delete('/:id', function (req, res) {
+  calender.deleteById(req, res);
+});
 module.exports = router;

@@ -12,4 +12,20 @@ const e_calender = new E_Calender();
 router.get('/:id', function (req, res) {
   e_calender.findById(req, res);
 });
+
+router.get('/', function (req, res) {
+  e_calender.findAll(res);
+});
+
+router.post('/create', function (req, res) {
+  e_calender.create(req, res);
+});
+
+router.put('/:id', function (req, res) {
+  e_calender.update(req, res);
+});
+
+router.delete('/:id', function (req, res) {
+  e_calender.deleteById(req, res);
+});
 module.exports = router;

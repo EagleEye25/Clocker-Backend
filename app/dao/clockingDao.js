@@ -14,17 +14,75 @@ class Clocking {
 	}
 
 	/**
-     * Tries to find an entity using its Id / Primary Key
-     * @params id
-     * @return entity
-     */
-  //   findById(id) {
-	// 		let sqlRequest = "SELECT * FROM employee WHERE id=$id";
-	// 		let sqlParams = {$id: id};
-	// 		return this.common.findOne(sqlRequest, sqlParams).then(row =>
-	// 			new Employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id)
-	// 		);
-	// };
+	 * Tries to find all entities
+	 * @return entity
+	 */
+	async findAll() {
+		let sqlRequest = "SELECT * FROM clocking";
+		const rows = await this.common.findAll(sqlRequest);
+		let clockings = [];
+		for (const row of rows) {
+			clockings.push(new clocking(row.id, row.employee_id, row.reason_id, row.clock_in,
+				row.clock_out, row.overtime));
+		}
+		return clockings;
+	};
+
+	/**
+	 * Tries to find all entities
+	 * @return entity
+	 */
+	async findByEmployee(employee_id) {
+		let sqlRequest = "SELECT * FROM clocking WHERE employee_id=$employee_id";
+		let sqlParams = {$employee_id: employee_id};
+		const row = await this.common.findOne(sqlRequest, sqlParams);
+		return new clocking(row.id, row.employee_id, row.reason_id, row.clock_in,
+			row.clock_out, row.overtime);
+	};
+
+	/**
+	 * Creates the given entity in the database
+	 * @params Clocking
+	 * returns database insertion status
+	 */
+	clockIn(clocking) {
+		let sqlRequest = `INSERT into clocking (employee_id, reason_id, clock_in,
+											clock_out, overtime)
+			VALUES ($employee_id, $reason_id, $clock_in, $clock_out, $overtime)`;
+		let sqlParams = {
+			$employee_id: clocking.employee_id,
+			$reason_id: clocking.reason_id,
+			$clock_in: clocking.clock_in,
+			$clock_out: clocking.clock_out,
+			$overtime: clocking.overtime
+		};
+		return this.common.run(sqlRequest, sqlParams);
+	};
+
+	/**
+	 * Updates the given entity in the database
+	 * @params clocking
+	 * returns database insertion status
+	 */
+	clockOut(clocking) {
+		let sqlRequest = `UPDATE clocking SET
+			employee_id=$employee_id,
+			reason_id=$reason_id,
+			clock_in=$clock_in,
+			clock_out=$clock_out,
+			overtime=$overtime
+			WHERE id=$id`;
+
+		let sqlParams = {
+			$id: clocking.id,
+			$employee_id: clocking.employee_id,
+			$reason_id: clocking.reason_id,
+			$clock_in: clocking.clock_in,
+			$clock_out: clocking.clock_out,
+			$overtime: clocking.overtime
+		};
+		return this.common.run(sqlRequest, sqlParams);
+	};
 }
 
 module.exports = Clocking;
