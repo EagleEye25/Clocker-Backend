@@ -1,5 +1,5 @@
 /* Load calender_times Data Access Object */
-const c_timesDAO = require('../dao/calender_times');
+const c_timesDAO = require('../dao/calender_timesDao');
 
 /* Load Controller Common function */
 const ControllerCommon = require('./common/controllerCommon');

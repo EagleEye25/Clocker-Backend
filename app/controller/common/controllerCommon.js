@@ -33,7 +33,7 @@ class controllerCommon {
 
     findError(res) {
         return (error) => {
-            res.status(404); // Not found
+            res.status(404);
             res.json(error);
         }
     }

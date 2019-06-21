@@ -1,5 +1,5 @@
 /* Load Employee_Calender Data Access Object */
-const E_CalenderDAO = require('../dao/employee_calender');
+const E_CalenderDAO = require('../dao/employee_calenderDao');
 
 /* Load Controller Common function */
 const ControllerCommon = require('./common/controllerCommon');

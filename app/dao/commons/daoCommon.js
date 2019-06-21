@@ -39,7 +39,7 @@ class Common {
 						new DaoError(11, "Invalid arguments")
 					);
 				} else if (rows === null || rows.length === 0) {
-						reject(
+					reject(
 							new DaoError(21, "Entity not found")
 						);
 				} else {
