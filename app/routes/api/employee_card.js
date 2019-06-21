@@ -12,4 +12,20 @@ const e_card = new E_Card();
 router.get('/:id', function (req, res) {
   e_card.findById(req, res);
 });
+
+router.get('/', function (req, res) {
+  e_card.findAll(res);
+});
+
+router.post('/create', function (req, res) {
+  e_card.create(req, res);
+});
+
+router.put('/:id', function (req, res) {
+  e_card.update(req, res);
+});
+
+router.delete('/:id', function (req, res) {
+  e_card.deleteById(req, res);
+});
 module.exports = router;
