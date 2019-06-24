@@ -4,15 +4,12 @@
   "description": "POC - NodeJS REST API using SQLite as a database.",
   "author": "Romuald Tuffreau https://github.com/romwaldtff",
   "dependencies": {
+    "bluebird": "*",
     "body-parser": "*",
+    "cors": "^2.8.5",
     "ejs": "*",
     "express": "*",
-    "sqlite": "*",
-    "bluebird": "*"
+    "sqlite": "*"
   },
-  "license": "LGPL-3.0",
-  "bugs": {
-    "url": "https://github.com/romwaldtff/NodeJS-REST-API-SQLite/issues"
-  },
-  "repository": "https://github.com/romwaldtff/NodeJS-REST-API-SQLite"
+  "license": "LGPL-3.0"
 }
