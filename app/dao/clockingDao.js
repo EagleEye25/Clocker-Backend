@@ -96,9 +96,17 @@ class Clocking {
 		let sqlParams = {$card_no: card_no};
 		const row = await this.common.findOne(sqlRequest, sqlParams);
 		if (row.clock_out == null) {
-			return 'Clock_Out'
+			let data = {
+				employee_id: row.employee_id,
+				action: 'Clock_Out'
+			}
+			return data;
 		} else {
-			return 'Clock_In'
+			let data = {
+				employee_id: row.employee_id,
+				action: 'Clock_In'
+			}
+			return data;
 		}
 		// return new clocking(row.id, row.employee_id, row.reason_id, row.clock_in,
 		// 	row.clock_out, row.overtime);
