@@ -86,7 +86,7 @@ class Clocking {
 
 	async determineAction(card_no) {
 		let sqlRequest = `
-		SELECT clocking.id, clocking.employee_id
+		SELECT clocking.id, clocking.employee_id, clocking.clock_out
 		FROM  clocking
 		LEFT JOIN card ON card.id = employee_card.card_id
     LEFT JOIN employee_card ON clocking.employee_id = employee_card.employee_id
