@@ -4,6 +4,9 @@ const ClockingDAO = require('../dao/clockingDao');
 /* Load Controller Common function */
 const ControllerCommon = require('./common/controllerCommon');
 
+const cardCon = require('./card');
+const employee_cardCon = require('./employee_card');
+
 /* Load Employee entity */
 const clockingM = require('../model/clocking');
 
@@ -24,6 +27,19 @@ class Clocking {
 	 */
 	findAll(res) {
 		this.dao.findAll()
+			.then(this.common.findSuccess(res))
+			.catch(this.common.findError(res));
+	};
+
+		/**
+	 * Tries to find an entity
+	 * @params res
+	 * @return entity
+	 */
+	determineAction(req, res) {
+		let cardNo = req.params.card_no;
+
+		this.dao.determineAction(cardNo)
 			.then(this.common.findSuccess(res))
 			.catch(this.common.findError(res));
 	};

@@ -24,4 +24,8 @@ router.put('/clock_out/:id', function (req, res) {
 router.get('/findEmployee/:employee_id', function (req, res) {
   clocking.findByEmployee(req, res);
 });
+
+router.get('/clockProcess/:card_no', function (req, res) {
+  clocking.determineAction(req, res);
+});
 module.exports = router;
