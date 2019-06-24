@@ -5,7 +5,7 @@ const CardDAO = require('../dao/cardDao');
 const ControllerCommon = require('./common/controllerCommon');
 
 /* Load Employee entity */
-const card = require('../model/card');
+const cardM = require('../model/card');
 
 /**
  * Car Controller
@@ -41,6 +41,24 @@ class Card {
 		this.dao.findByCard_No(card_no)
 			.then(this.common.findSuccess(res))
 			.catch(this.common.findError(res));
+	};
+
+	/**
+	 * Creates the given entity in the database
+	 * @params req, res
+	 * returns database insertion status
+	 */
+	create(req, res) {
+		let card = new cardM();
+		if (!req.body) {
+			return this.common.findError(res);
+		}
+
+		card.card_no = req.body.card_no;
+
+		return this.dao.create(card)
+			.then(this.common.editSuccess(res))
+			.catch(this.common.serverError(res));
 	};
 }
 
