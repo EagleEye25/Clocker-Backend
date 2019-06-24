@@ -16,4 +16,8 @@ router.get('/:id', function (req, res) {
 router.get('/card_no/:card_no', function (req, res) {
   card.findByCard_No(req, res);
 });
+
+router.post('/create', function (req, res) {
+  card.create(req, res);
+});
 module.exports = router;

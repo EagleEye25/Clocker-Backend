@@ -83,6 +83,21 @@ class Clocking {
 		};
 		return this.common.run(sqlRequest, sqlParams);
 	};
+
+	async determineAction(card_no) {
+		let sqlRequest = `
+		SELECT *
+		FROM  clocking
+		LEFT JOIN card ON card.id = employee_card.card_id
+    LEFT JOIN employee_card ON clocking.employee_id = employee_card.employee_id
+		WHERE card.card_no = $card_no
+		ORDER BY id DESC LIMIT 1`;
+
+		let sqlParams = {$card_no: card_no};
+		const row = await this.common.findOne(sqlRequest, sqlParams);
+		return new clocking(row.id, row.employee_id, row.reason_id, row.clock_in,
+			row.clock_out, row.overtime);
+	}
 }
 
 module.exports = Clocking;

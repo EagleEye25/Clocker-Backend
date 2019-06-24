@@ -36,6 +36,20 @@ class Card {
 		const row = await this.common.findOne(sqlRequest, sqlParams);
 		return new card(row.id, row.card_no);
 	};
+
+	/**
+	 * Creates the given entity in the database
+	 * @params Card
+	 * returns database insertion status
+	 */
+	create(card) {
+		let sqlRequest = `INSERT into card (card_no)
+			VALUES ($card)`;
+		let sqlParams = {
+			$card: card.card_no
+		};
+		return this.common.run(sqlRequest, sqlParams);
+	};
 }
 
 module.exports = Card;
