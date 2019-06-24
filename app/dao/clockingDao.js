@@ -86,7 +86,7 @@ class Clocking {
 
 	async determineAction(card_no) {
 		let sqlRequest = `
-		SELECT clocking.id, clocking.employee_id, clocking.clock_out
+		SELECT clocking.id, clocking.employee_id, clocking.clock_in, clocking.clock_out
 		FROM  clocking
 		LEFT JOIN card ON card.id = employee_card.card_id
     LEFT JOIN employee_card ON clocking.employee_id = employee_card.employee_id
@@ -109,8 +109,6 @@ class Clocking {
 			data.action = 'Clock_In';
 			return data;
 		}
-		// return new clocking(row.id, row.employee_id, row.reason_id, row.clock_in,
-		// 	row.clock_out, row.overtime);
 	}
 }
 
