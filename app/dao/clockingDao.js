@@ -86,26 +86,27 @@ class Clocking {
 
 	async determineAction(card_no) {
 		let sqlRequest = `
-		SELECT *
+		SELECT clocking.id, clocking.employee_id
 		FROM  clocking
 		LEFT JOIN card ON card.id = employee_card.card_id
     LEFT JOIN employee_card ON clocking.employee_id = employee_card.employee_id
 		WHERE card.card_no = $card_no
-		ORDER BY id DESC LIMIT 1`;
+		ORDER BY clocking.id DESC LIMIT 1`;
 
 		let sqlParams = {$card_no: card_no};
 		const row = await this.common.findOne(sqlRequest, sqlParams);
+
+		let data = {
+			id: row.id,
+			employee_id: row.employee_id,
+			action: ''
+		}
+
 		if (row.clock_out == null) {
-			let data = {
-				employee_id: row.employee_id,
-				action: 'Clock_Out'
-			}
+			data.action = 'Clock_Out';
 			return data;
 		} else {
-			let data = {
-				employee_id: row.employee_id,
-				action: 'Clock_In'
-			}
+			data.action = 'Clock_In';
 			return data;
 		}
 		// return new clocking(row.id, row.employee_id, row.reason_id, row.clock_in,
