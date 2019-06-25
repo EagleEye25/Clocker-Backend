@@ -44,6 +44,17 @@ class Card {
 	};
 
 	/**
+	 * Tries to find entities using
+	 * @params res
+	 * @return entity
+	 */
+	findCardsNotLinked(res) {
+		this.dao.findCardsNotLinked()
+			.then(this.common.findSuccess(res))
+			.catch(this.common.findError(res));
+	};
+
+	/**
 	 * Creates the given entity in the database
 	 * @params req, res
 	 * returns database insertion status
