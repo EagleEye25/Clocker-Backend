@@ -10,7 +10,6 @@ const whitelist = ['http://localhost'];
 const corsOptions = {
 	origin (origin, callback) {
 		for (const url of whitelist){
-			console.log("HEREH I AM MOTHER FUCKER!!!", url, origin);
 			if (!origin || origin.startsWith(url)) {
 				callback(null, true);
 			} else {

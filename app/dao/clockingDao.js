@@ -104,6 +104,7 @@ class Clocking {
 
 		if (row.clock_out == null) {
 			data.action = 'Clock_Out';
+			data.clock_in = row.clock_in;
 			return data;
 		} else {
 			data.action = 'Clock_In';
