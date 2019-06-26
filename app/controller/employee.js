@@ -45,6 +45,17 @@ class Employee {
 	};
 
 	/**
+	 * Tries to find all entities
+	 * @params res
+	 * @return entity
+	 */
+	findUnassingnedEmployees(res) {
+		this.dao.findUnassingnedEmployees()
+			.then(this.common.findSuccess(res))
+			.catch(this.common.findError(res));
+	};
+
+	/**
 	 * Creates the given entity in the database
 	 * @params req, res
 	 * returns database insertion status

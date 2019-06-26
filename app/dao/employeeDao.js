@@ -40,6 +40,23 @@ class Employee {
 	};
 
 	/**
+	 * Tries to find all entities
+	 * @return entity
+	 */
+	async findUnassingnedEmployees() {
+		let sqlRequest = `
+		SELECT *
+		FROM employee, employee_card
+		WHERE employee.id != employee_card.employee_id`;
+		const rows = await this.common.findAll(sqlRequest);
+		let employees = [];
+		for (const row of rows) {
+			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id));
+		}
+		return employees;
+	};
+
+	/**
 	 * Creates the given entity in the database
 	 * @params Employee
 	 * returns database insertion status
