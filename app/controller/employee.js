@@ -34,6 +34,19 @@ class Employee {
 	};
 
 	/**
+	 * Tries to find an entity using its Id / Primary Key
+	 * @params req, res
+	 * @return entity
+	 */
+	findByName(req, res) {
+		let name = req.params.name;
+
+		this.dao.findByName(name)
+			.then(this.common.findSuccess(res))
+			.catch(this.common.findError(res));
+	};
+
+	/**
 	 * Tries to find all entities
 	 * @params res
 	 * @return entity

@@ -33,4 +33,8 @@ router.get('/unassigned/cards', function (req, res) {
   employee.findUnassingnedEmployees(res);
 });
 
+router.get('/findByName/:name', function (req, res) {
+  employee.findByName(req, res);
+});
+
 module.exports = router;

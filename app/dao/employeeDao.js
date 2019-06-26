@@ -26,6 +26,21 @@ class Employee {
 	};
 
 	/**
+	 * Tries to find an entity using its namey
+	 * @params id
+	 * @return entity
+	 */
+	async findByName(name) {
+		let sqlRequest = `
+		SELECT *
+		FROM employee
+		WHERE name=$name`;
+		let sqlParams = {$name: name};
+		const row = await this.common.findOne(sqlRequest, sqlParams);
+		return new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id);
+	};
+
+	/**
 	 * Tries to find all entities
 	 * @return entity
 	 */
