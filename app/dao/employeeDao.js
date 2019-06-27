@@ -60,9 +60,10 @@ class Employee {
 	 */
 	async findUnassingnedEmployees() {
 		let sqlRequest = `
-		SELECT *
-		FROM employee, employee_card
-		WHERE employee.id != employee_card.employee_id`;
+		SELECT employee.*
+		FROM employee
+		LEFT JOIN employee_card ON employee.id = employee_card.employee_id
+		WHERE employee_card.employee_id IS NULL`;
 		const rows = await this.common.findAll(sqlRequest);
 		let employees = [];
 		for (const row of rows) {

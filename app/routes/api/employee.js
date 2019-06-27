@@ -29,7 +29,7 @@ router.delete('/:id', function (req, res) {
   employee.deleteById(req, res);
 });
 
-router.get('/unassigned/cards', function (req, res) {
+router.get('/unassigned/employees', function (req, res) {
   employee.findUnassingnedEmployees(res);
 });
 
