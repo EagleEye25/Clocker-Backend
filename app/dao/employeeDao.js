@@ -37,6 +37,9 @@ class Employee {
 		WHERE name=$name`;
 		let sqlParams = {$name: name};
 		const row = await this.common.findOne(sqlRequest, sqlParams);
+		if (!row) {
+			return 'Doesnt Exist';
+		}
 		return new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id);
 	};
 
@@ -77,7 +80,7 @@ class Employee {
 	 * @params Employee
 	 * returns database insertion status
 	 */
-	create(employee) {
+	async create(employee) {
 		let sqlRequest = "INSERT into employee (name, admin, reporting_admin, password, calender_id) " +
 				"VALUES ($name, $admin, $reporting_admin, $password ,$calender_id)";
 		let sqlParams = {
@@ -87,7 +90,15 @@ class Employee {
 			$password: employee.password,
 			$calender_id: employee.calender_id
 		};
-		return this.common.run(sqlRequest, sqlParams);
+		const req = await this.common.run(sqlRequest, sqlParams)
+			.then(async() => {
+				console.log('here');
+				const emp =  await this.findByName(employee.name);
+				console.log(emp);
+				return emp;
+			})
+			console.log('SOmething');
+			return(req);
 	};
 
 	/**

@@ -18,9 +18,13 @@ class controllerCommon {
     }
 
     editSuccess(res) {
-        return () => {
+        return (result) => {
             res.status(201); // Created/Updated/Deleted
-            res.json({});
+            let temp = {};
+            if (result) {
+                temp = result;
+            }
+            res.json(temp);
         }
     }
 

@@ -61,7 +61,7 @@ class Card {
 	 */
 	create(req, res) {
 		let card = new cardM();
-		if (!req.body) {
+		if (!req.body.card_no) {
 			return this.common.findError(res);
 		}
 
