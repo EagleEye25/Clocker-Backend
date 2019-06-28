@@ -88,16 +88,22 @@ class Card {
 	 * @return entity
 	 */
 	async findCardsAndState() {
+		console.log('here');
 		let sqlRequest = `
-			SELECT card.id, card.card_no
-			FROM card, employee_card
-			WHERE card.id != employee_card.card_id`;
-			const rows = await this.common.findAll(sqlRequest);
-			let unlinkedCards = [];
-			for (const row of rows) {
-				unlinkedCards.push(new card(row.id, row.card_no));
-			}
-			return unlinkedCards;
+			SELECT 	card.*,
+			CASE WHEN employee_card.card_id IS NULL THEN false ELSE true END AS assigned
+			FROM	card
+			LEFT JOIN employee_card ON employee_card.card_id = card.id`;
+		const rows = await this.common.findAll(sqlRequest);
+		let cardsAndStates = [];
+		for (const row of rows) {
+			cardsAndStates.push({
+				"id": row.id,
+				"card_no": row.card_no,
+				"assigned": row.assigned
+			});
+		}
+		return cardsAndStates;
 	};
 }
 

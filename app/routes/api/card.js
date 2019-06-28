@@ -28,4 +28,9 @@ router.post('/create', function (req, res) {
 router.get('/unlinked/cards', function (req, res) {
   card.findCardsNotLinked(res);
 });
+
+router.get('/find/state', function (req, res) {
+  console.log('router');
+  card.findCardsAndState(res);
+});
 module.exports = router;
