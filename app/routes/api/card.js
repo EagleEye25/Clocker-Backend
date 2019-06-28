@@ -9,6 +9,10 @@ const card = new Card();
 /**
  * Card Entity routes
  */
+router.get('/', function (req, res) {
+  card.findAll(res);
+});
+
 router.get('/:id', function (req, res) {
   card.findById(req, res);
 });

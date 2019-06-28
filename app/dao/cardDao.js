@@ -26,6 +26,21 @@ class Card {
 	};
 
 	/**
+	 * Tries to find entities
+	 * @params
+	 * @return entity
+	 */
+	async findAll() {
+		let sqlRequest = "SELECT * FROM card";
+		const rows = await this.common.findAll(sqlRequest);
+		let cards = [];
+		for (const row of rows) {
+			cards.push(new card(row.id, row.card_no));
+		}
+		return cards;
+	};
+
+	/**
 	 * Tries to find an entity using its card_no
 	 * @params card_no
 	 * @return entity
@@ -56,6 +71,23 @@ class Card {
 	 * @return entity
 	 */
 	async findCardsNotLinked() {
+		let sqlRequest = `
+			SELECT card.id, card.card_no
+			FROM card, employee_card
+			WHERE card.id != employee_card.card_id`;
+			const rows = await this.common.findAll(sqlRequest);
+			let unlinkedCards = [];
+			for (const row of rows) {
+				unlinkedCards.push(new card(row.id, row.card_no));
+			}
+			return unlinkedCards;
+	};
+
+	/**
+	 * Tries to find all entities that arent linked to another employee
+	 * @return entity
+	 */
+	async findCardsAndState() {
 		let sqlRequest = `
 			SELECT card.id, card.card_no
 			FROM card, employee_card
