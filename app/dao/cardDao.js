@@ -88,7 +88,6 @@ class Card {
 	 * @return entity
 	 */
 	async findCardsAndState() {
-		console.log('here');
 		let sqlRequest = `
 			SELECT 	card.*,
 			CASE WHEN employee_card.card_id IS NULL THEN false ELSE true END AS assigned

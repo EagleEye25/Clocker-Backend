@@ -30,7 +30,6 @@ router.get('/unlinked/cards', function (req, res) {
 });
 
 router.get('/find/state', function (req, res) {
-  console.log('router');
   card.findCardsAndState(res);
 });
 module.exports = router;

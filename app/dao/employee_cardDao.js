@@ -30,11 +30,25 @@ class Employee_Card {
 	 * @return entity
 	 */
 	async findAll() {
-		let sqlRequest = "SELECT * FROM employee_card";
+		let sqlRequest = `
+			SELECT  ec.*,
+			c.card_no,
+			e.name
+			FROM employee_card ec
+			INNER JOIN employee e  ON e.id = ec.employee_id
+			LEFT JOIN card c ON c.id = ec.card_id`;
 		const rows = await this.common.findAll(sqlRequest);
 		let cards = [];
 		for (const row of rows) {
-			cards.push(new employee_card(row.id, row.employee_id, row.card_id, row.issued_at, row.active));
+			cards.push({
+				"id": row.id,
+				"employee_id": row.employee_id,
+				"card_id": row.card_id,
+				"issued_at": row.issued_at,
+				"active": row.active,
+				"name": row.name,
+				"card_no": row.card_no
+			});
 		}
 		return cards;
 	};

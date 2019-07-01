@@ -92,12 +92,9 @@ class Employee {
 		};
 		const req = await this.common.run(sqlRequest, sqlParams)
 			.then(async() => {
-				console.log('here');
 				const emp =  await this.findByName(employee.name);
-				console.log(emp);
 				return emp;
 			})
-			console.log('SOmething');
 			return(req);
 	};
 

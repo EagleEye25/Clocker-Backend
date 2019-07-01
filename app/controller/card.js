@@ -34,7 +34,6 @@ class Card {
 	 * @return entity
 	 */
 	findCardsAndState(res) {
-		console.log('card');
 		this.dao.findCardsAndState()
 			.then(this.common.findSuccess(res))
 			.catch(this.common.findError(res));
