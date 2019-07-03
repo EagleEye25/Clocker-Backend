@@ -22,7 +22,7 @@ class Reason {
 		let sqlRequest = "SELECT * FROM reason WHERE id=$id";
 		let sqlParams = {$id: id};
 		const row = await this.common.findOne(sqlRequest, sqlParams);
-		return new reason(row.id, row.description, row.work);
+		return new reason(row.id, row.description, row.work, row.active);
 	};
 
 	/**
@@ -34,7 +34,7 @@ class Reason {
 		const rows = await this.common.findAll(sqlRequest);
 		let reasons = [];
 		for (const row of rows) {
-			reasons.push(new reason(row.id, row.description, row.work));
+			reasons.push(new reason(row.id, row.description, row.work, row.active));
 		}
 		return reasons;
 	};
@@ -45,11 +45,12 @@ class Reason {
 	 * returns database insertion status
 	 */
 	create(reason) {
-		let sqlRequest = "INSERT into reason (description, work) " +
-				"VALUES ($description, $work)";
+		let sqlRequest = "INSERT into reason (description, work, active) " +
+				"VALUES ($description, $work, $active)";
 		let sqlParams = {
 			$description: reason.description,
-			$work: reason.work
+			$work: reason.work,
+			$active: reason.active
 		};
 		return this.common.run(sqlRequest, sqlParams);
 	};
@@ -60,15 +61,17 @@ class Reason {
 	 * @return true if the entity has been updated, false if not found and not updated
 	 */
 	update(reason) {
-		let sqlRequest = "UPDATE reason SET " +
-			"description=$description, " +
-			"work=$work " +
-			"WHERE id=$id";
+		let sqlRequest = `UPDATE reason SET
+			description=$description,
+			work=$work,
+			active=$active
+			WHERE id=$id`;
 
 		let sqlParams = {
 			$id: reason.id,
 			$description: reason.description,
-			$work: reason.work
+			$work: reason.work,
+			$active: reason.active
 		};
 		return this.common.run(sqlRequest, sqlParams);
 	};

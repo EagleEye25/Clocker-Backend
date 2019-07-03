@@ -57,6 +57,7 @@ class Reason {
 
 		reason.description = req.body.description;
 		reason.work = req.body.work;
+		reason.active = req.body.active;
 
 		return this.dao.create(reason)
 			.then(this.common.editSuccess(res))
@@ -74,6 +75,7 @@ class Reason {
 		reason.id = req.body.id;
 		reason.description = req.body.description;
 		reason.work = req.body.work;
+		reason.active = req.body.active;
 
 		return this.dao.update(reason)
 			.then(this.common.editSuccess(res))

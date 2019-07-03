@@ -24,7 +24,8 @@ let init = function () {
 	db.run(`CREATE TABLE if not exists reason (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		description TEXT,
-		work BOOL)`
+		work BOOL,
+		active BOOL)`
 	);
 
 	db.run(`CREATE TABLE if not exists token (
@@ -66,8 +67,12 @@ let init = function () {
 	db.run(`CREATE TABLE if not exists calender_times (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		calender_id INTEGER,
-		start DATETIME,
-		end DATETIME,
+		startWeek DATETIME,
+		startDay DATETIME,
+		startTime DATETIME,
+		endWeek DATETIME,
+		endDay DATETIME,
+		endTime DATETIME,
 		FOREIGN KEY(calender_id) REFERENCES calender(id))`
 	);
 

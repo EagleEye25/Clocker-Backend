@@ -3,10 +3,11 @@
  */
 
 class Reason {
-  constructor(id, description, work) {
+  constructor(id, description, work, active) {
     this.id = id;
     this.description = description;
     this.work = work;
+    this.active = active;
   }
 }
 

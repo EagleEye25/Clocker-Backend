@@ -72,9 +72,13 @@ class Card {
 	 */
 	async findCardsNotLinked() {
 		let sqlRequest = `
-			SELECT card.id, card.card_no
-			FROM card, employee_card
-			WHERE card.id != employee_card.card_id`;
+			SELECT c.id, c.card_no
+			FROM card c
+			LEFT JOIN employee_card ec ON ec.card_id = c.id
+			WHERE ec.card_id IS NULL`;
+			// SELECT card.id, card.card_no
+			// FROM card, employee_card
+			// WHERE card.id NOT IN employee_card
 			const rows = await this.common.findAll(sqlRequest);
 			let unlinkedCards = [];
 			for (const row of rows) {

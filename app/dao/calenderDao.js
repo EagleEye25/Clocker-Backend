@@ -34,7 +34,7 @@ class Calender {
 		const rows = await this.common.findAll(sqlRequest);
 		let calenders = [];
 		for (const row of rows) {
-			calenders.push(new calender(row.id, row.description, row.work));
+			calenders.push(new calender(row.id, row.name, row.description));
 		}
 		return calenders;
 	};

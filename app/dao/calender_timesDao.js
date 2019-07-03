@@ -34,7 +34,7 @@ class Calender_Times {
 		const rows = await this.common.findAll(sqlRequest);
 		let c_times = [];
 		for (const row of rows) {
-			c_times.push(new calender_times(row.id, row.calender_id, row.start, row.end));
+			c_times.push(new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endWeek, row.endDay, row.endTime));
 		}
 		return c_times;
 	};
@@ -45,12 +45,16 @@ class Calender_Times {
 	 * returns database insertion status
 	 */
 	create(c_times) {
-		let sqlRequest = `INSERT into calender_times (calender_id, start, end)
-				VALUES ($calender_id, $start, $end)`;
+		let sqlRequest = `INSERT into calender_times (calender_id, startWeek, startDay, startTime, endWeek, endDay, endTime)
+				VALUES ($calender_id, $startWeek, $startDay, $startTime, $endWeek, $endDay, $endTime)`;
 		let sqlParams = {
 			$calender_id: c_times.calender_id,
-			$start: c_times.start,
-			$end: c_times.end
+			$startWeek: c_times.startWeek,
+			$startDay: c_times.startDay,
+			$startTime: c_times.startTime,
+			$endWeek: c_times.endWeek,
+			$endDay: c_times.endDay,
+			$endTime: c_times.endTime
 		};
 		return this.common.run(sqlRequest, sqlParams);
 	};
