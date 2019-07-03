@@ -67,15 +67,23 @@ class Calender_Times {
 	update(c_times) {
 		let sqlRequest = `UPDATE calender_times SET
 			calender_id=$calender_id,
-			start=$start,
-			end=$end
+			startWeek = $startWeek,
+			startDay = $startDay,
+			startTime = $startTime,
+			endWeek = $endWeek,
+			endDay = $endDay,
+			endTime = $endTime
 			WHERE id=$id`;
 
 		let sqlParams = {
 			$id: c_times.id,
 			$calender_id: c_times.calender_id,
-			$start: c_times.start,
-			$end: c_times.end
+			$startWeek: c_times.startWeek,
+			$startDay: c_times.startDay,
+			$startTime: c_times.startTime,
+			$endWeek: c_times.endWeek,
+			$endDay: c_times.endDay,
+			$endTime: c_times.endTime
 		};
 		return this.common.run(sqlRequest, sqlParams);
 	};

@@ -75,11 +75,14 @@ class Calender_Times {
 	 */
 	update(req, res) {
 		let c_times = new calender_timesM();
-
 		c_times.id = req.body.id;
 		c_times.calender_id = req.body.calender_id;
-		c_times.start = req.body.start;
-		c_times.end = req.body.end;
+		c_times.startWeek = req.body.startWeek;
+		c_times.startDay = req.body.startDay;
+		c_times.startTime = req.body.startTime;
+		c_times.endWeek = req.body.endWeek;
+		c_times.endDay = req.body.endDay;
+		c_times.endTime = req.body.endTime;
 
 		return this.dao.update(c_times)
 			.then(this.common.editSuccess(res))
