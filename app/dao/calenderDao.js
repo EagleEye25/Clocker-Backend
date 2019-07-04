@@ -40,6 +40,25 @@ class Calender {
 	};
 
 	/**
+	 * Tries to find all entities
+	 * @return entity
+	 */
+	async findUnassigned() {
+		let sqlRequest = `
+			SELECT c.*
+			FROM calender c
+			LEFT JOIN calender_times ct ON ct.calender_id = c.id
+			WHERE ct.calender_id IS NULL
+		`;
+		const rows = await this.common.findAll(sqlRequest);
+		let calenders = [];
+		for (const row of rows) {
+			calenders.push(new calender(row.id, row.name, row.description));
+		}
+		return calenders;
+	};
+
+	/**
 	 * Creates the given entity in the database
 	 * @params Calender
 	 * returns database insertion status

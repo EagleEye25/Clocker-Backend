@@ -40,6 +40,23 @@ class Calender_Times {
 	};
 
 	/**
+	 * Tries to find all entities
+	 * @return entity
+	 */
+	async findUnassigned() {
+		let sqlRequest = `
+			SELECT *
+			FROM calender_times
+			WHERE calender_id IS NUll`;
+		const rows = await this.common.findAll(sqlRequest);
+		let c_times = [];
+		for (const row of rows) {
+			c_times.push(new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endWeek, row.endDay, row.endTime));
+		}
+		return c_times;
+	};
+
+	/**
 	 * Creates the given entity in the database
 	 * @params Calender_Times
 	 * returns database insertion status
