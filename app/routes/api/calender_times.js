@@ -32,4 +32,8 @@ router.delete('/:id', function (req, res) {
 router.get('/times/unAssigned', function (req, res) {
   c_times.findUnassigned(res);
 });
+
+router.get('/times/existing/:c_times', function (req, res) {
+  c_times.findExisting(req, res);
+});
 module.exports = router;

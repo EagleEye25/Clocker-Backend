@@ -56,6 +56,19 @@ class Calender {
 	};
 
 	/**
+	 * Tries to find an entity using its Id / Primary Key
+	 * @params req, res
+	 * @return entity
+	 */
+	findByName(req, res) {
+		let name = req.params.name;
+
+		this.dao.findByName(name)
+			.then(this.common.findSuccess(res))
+			.catch(this.common.findError(res));
+	};
+
+	/**
 	 * Creates the given entity in the database
 	 * @params req, res
 	 * returns database insertion status

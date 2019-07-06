@@ -32,4 +32,9 @@ router.delete('/:id', function (req, res) {
 router.get('/unassigned/calender', function (req, res) {
   calender.findUnassigned(res);
 });
+
+router.get('/findByName/:name', function (req, res) {
+  calender.findByName(req, res);
+});
+
 module.exports = router;

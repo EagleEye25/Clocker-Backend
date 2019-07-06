@@ -40,6 +40,33 @@ class Calender_Times {
 	};
 
 	/**
+	 * Tries to find entity
+	 * @return entity
+	 */
+	async findExisting(c_times) {
+		let sqlRequest = `
+			SELECT *
+			FROM calender_times ct
+			WHERE ct.startWeek = $startWeek
+			AND ct.startDay = $startDay
+			AND ct.startTime = $startTime
+			AND ct.endWeek = $endWeek
+			AND ct.endDay = $endDay
+			AND ct.endTime = $endTime
+		`;
+		let sqlParams = {
+			$startWeek: c_times.startWeek,
+			$startDay: c_times.startDay,
+			$startTime: c_times.startTime,
+			$endWeek: c_times.endWeek,
+			$endDay: c_times.endDay,
+			$endTime: c_times.endTime
+		};
+		const row = await this.common.findOne(sqlRequest, sqlParams);
+		return new new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endWeek, row.endDay, row.endTime);
+	};
+
+	/**
 	 * Tries to find all entities
 	 * @return entity
 	 */
@@ -74,6 +101,17 @@ class Calender_Times {
 			$endTime: c_times.endTime
 		};
 		return this.common.run(sqlRequest, sqlParams);
+
+// TODO: create method to find calendar times
+		// const req = await this.common.run(sqlRequest, sqlParams)
+		// .then(async() => {
+		// 	const cTime =  await this.findByName(employee.name);
+		// 	return cTime;
+		// })
+		// return(req);
+
+
+
 	};
 
 	/**

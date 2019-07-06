@@ -26,6 +26,24 @@ class Calender {
 	};
 
 	/**
+	 * Tries to find an entity using its Id / Primary Key
+	 * @params id
+	 * @return entity
+	 */
+	async findByName(name) {
+		let sqlRequest = `
+			SELECT *
+			FROM calender
+			WHERE name=$name`;
+		let sqlParams = {$name: name};
+		const row = await this.common.findOne(sqlRequest, sqlParams);
+		if (!row) {
+			return 'Doesnt Exist';
+		}
+		return new calender(row.id, row.description, row.work);
+	};
+
+	/**
 	 * Tries to find all entities
 	 * @return entity
 	 */

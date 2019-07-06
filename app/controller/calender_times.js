@@ -56,6 +56,26 @@ class Calender_Times {
 	};
 
 	/**
+	 * Tries to find all entities
+	 * @params res
+	 * @return entity
+	 */
+	findExisting(req, res) {
+		let c_times = new calender_timesM();
+
+		c_times.startWeek = req.body.sWeek;
+		c_times.startDay = req.body.sDay;
+		c_times.startTime = req.body.sTime;
+		c_times.endWeek = req.body.eWeek;
+		c_times.endDay = req.body.eDay;
+		c_times.endTime = req.body.eTime;
+
+		this.dao.findExisting(c_times)
+			.then(this.common.findSuccess(res))
+			.catch(this.common.findError(res));
+	};
+
+	/**
 	 * Creates the given entity in the database
 	 * @params req, res
 	 * returns database insertion status
