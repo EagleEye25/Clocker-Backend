@@ -70,10 +70,29 @@ class Employee {
 		const rows = await this.common.findAll(sqlRequest);
 		let employees = [];
 		for (const row of rows) {
-			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id));
+			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password));
 		}
 		return employees;
 	};
+
+// TODO: find employees that doesnt have selected calender assigned
+	// /**
+	//  * Tries to find all entities
+	//  * @return entity
+	//  */
+	// async findUnassignedEmpToCal(calID) {
+	// 	let sqlRequest = `
+	// 	SELECT employee.*
+	// 	FROM employee
+	// 	LEFT JOIN employee_calender ON calender.id = employee_calender.calender_id
+	// 	WHERE employee_calender.calender_id IS NULL`;
+	// 	const rows = await this.common.findAll(sqlRequest);
+	// 	let employees = [];
+	// 	for (const row of rows) {
+	// 		employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password));
+	// 	}
+	// 	return employees;
+	// };
 
 	/**
 	 * Creates the given entity in the database
@@ -81,14 +100,13 @@ class Employee {
 	 * returns database insertion status
 	 */
 	async create(employee) {
-		let sqlRequest = "INSERT into employee (name, admin, reporting_admin, password, calender_id) " +
-				"VALUES ($name, $admin, $reporting_admin, $password ,$calender_id)";
+		let sqlRequest = "INSERT into employee (name, admin, reporting_admin, password) " +
+				"VALUES ($name, $admin, $reporting_admin, $password)";
 		let sqlParams = {
 			$name: employee.name,
 			$admin: employee.admin,
 			$reporting_admin: employee.reporting_admin,
 			$password: employee.password,
-			$calender_id: employee.calender_id
 		};
 		const req = await this.common.run(sqlRequest, sqlParams)
 			.then(async() => {
@@ -109,7 +127,6 @@ class Employee {
 			"admin=$admin, " +
 			"reporting_admin=$reporting_admin, " +
 			"password=$password, " +
-			"calender_id=$calender_id " +
 			"WHERE id=$id";
 
 		let sqlParams = {
@@ -118,7 +135,6 @@ class Employee {
 			$admin: employee.admin,
 			$reporting_admin: employee.reporting_admin,
 			$password: employee.password,
-			$calender_id: employee.calender_id
 		};
 		return this.common.run(sqlRequest, sqlParams);
 	};

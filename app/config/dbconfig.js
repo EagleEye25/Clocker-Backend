@@ -50,9 +50,7 @@ let init = function () {
 		name TEXT,
 		admin BOOL,
 		reporting_admin BOOL,
-		password STRING,
-		calender_id INTEGER,
-		FOREIGN KEY(calender_id) REFERENCES calender(id))`
+		password STRING)`
 	);
 
 	db.run(`CREATE TABLE if not exists employee_calender (

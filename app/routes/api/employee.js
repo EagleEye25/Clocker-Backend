@@ -37,4 +37,8 @@ router.get('/findByName/:name', function (req, res) {
   employee.findByName(req, res);
 });
 
+router.get('/unassigned/employees/calender', function (req, res) {
+  employee.findUnassignedEmpToCal(res);
+});
+
 module.exports = router;
