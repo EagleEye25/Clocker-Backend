@@ -95,7 +95,6 @@ class Employee {
 		emp.admin = req.body.admin;
 		emp.reporting_admin = req.body.reporting_admin;
 		emp.password = req.body.password;
-		emp.calender_id = req.body.calender_id;
 
 		return this.dao.create(emp)
 			.then(this.common.editSuccess(res))
