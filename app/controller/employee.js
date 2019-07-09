@@ -95,6 +95,7 @@ class Employee {
 		emp.admin = req.body.admin;
 		emp.reporting_admin = req.body.reporting_admin;
 		emp.password = req.body.password;
+		emp.active = req.body.active;
 
 		return this.dao.create(emp)
 			.then(this.common.editSuccess(res))
@@ -117,6 +118,23 @@ class Employee {
 		emp.calender_id = req.body.calender_id;
 
 		return this.dao.update(emp)
+			.then(this.common.editSuccess(res))
+			.catch(this.common.serverError(res));
+	};
+
+
+	/**
+	 * Updates the given entity in the database
+	 * @params req, res
+	 * @return true if the entity has been updated, false if not found and not updated
+	 */
+	delete(req, res) {
+		let emp = new employee();
+
+		emp.id = req.body.id;
+		emp.active = req.body.active
+
+		return this.dao.delete(emp)
 			.then(this.common.editSuccess(res))
 			.catch(this.common.serverError(res));
 	};

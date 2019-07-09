@@ -41,4 +41,8 @@ router.get('/unassigned/employees/calender', function (req, res) {
   employee.findUnassignedEmpToCal(res);
 });
 
+router.put('/delete/:id', function (req, res) {
+  employee.delete(req, res);
+});
+
 module.exports = router;

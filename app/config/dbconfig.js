@@ -50,7 +50,8 @@ let init = function () {
 		name TEXT,
 		admin BOOL,
 		reporting_admin BOOL,
-		password STRING)`
+		password STRING,
+		active BOOL)`
 	);
 
 	db.run(`CREATE TABLE if not exists employee_calender (

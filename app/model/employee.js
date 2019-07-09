@@ -3,13 +3,14 @@
  */
 
 class Employee {
-  constructor(id, name, admin, reporting_admin, password ,calender_id) {
+  constructor(id, name, admin, reporting_admin, password ,calender_id, active) {
     this.id = id;
     this.name = name;
     this.admin = admin;
     this.reporting_admin = reporting_admin;
     this.password = password;
     this.calender_id = calender_id;
+    this.active = active;
   }
 }
 

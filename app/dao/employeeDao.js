@@ -52,7 +52,7 @@ class Employee {
 		const rows = await this.common.findAll(sqlRequest);
 		let employees = [];
 		for (const row of rows) {
-			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id));
+			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id, row.active));
 		}
 		return employees;
 	};
@@ -70,7 +70,7 @@ class Employee {
 		const rows = await this.common.findAll(sqlRequest);
 		let employees = [];
 		for (const row of rows) {
-			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password));
+			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.active));
 		}
 		return employees;
 	};
@@ -100,13 +100,14 @@ class Employee {
 	 * returns database insertion status
 	 */
 	async create(employee) {
-		let sqlRequest = "INSERT into employee (name, admin, reporting_admin, password) " +
-				"VALUES ($name, $admin, $reporting_admin, $password)";
+		let sqlRequest = "INSERT into employee (name, admin, reporting_admin, password, active) " +
+				"VALUES ($name, $admin, $reporting_admin, $password, $active)";
 		let sqlParams = {
 			$name: employee.name,
 			$admin: employee.admin,
 			$reporting_admin: employee.reporting_admin,
 			$password: employee.password,
+			$active: employee.active,
 		};
 		const req = await this.common.run(sqlRequest, sqlParams)
 			.then(async() => {
@@ -135,6 +136,23 @@ class Employee {
 			$admin: employee.admin,
 			$reporting_admin: employee.reporting_admin,
 			$password: employee.password,
+		};
+		return this.common.run(sqlRequest, sqlParams);
+	};
+
+	/**
+	 * Updates the given entity in the database
+	 * @params Employee
+	 * @return true if the entity has been updated, false if not found and not updated
+	 */
+	delete(emp) {
+		let sqlRequest = `UPDATE employee SET
+			active = $active
+			WHERE id=$id`;
+
+		let sqlParams = {
+			$id : emp.id,
+			$active: emp.active,
 		};
 		return this.common.run(sqlRequest, sqlParams);
 	};
