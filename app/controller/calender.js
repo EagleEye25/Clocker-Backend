@@ -56,6 +56,17 @@ class Calender {
 	};
 
 	/**
+	 * Tries to find all entities
+	 * @params res
+	 * @return entity
+	 */
+	findAssigned(res) {
+		this.dao.findAssigned()
+			.then(this.common.findSuccess(res))
+			.catch(this.common.findError(res));
+	};
+
+	/**
 	 * Tries to find an entity using its Id / Primary Key
 	 * @params req, res
 	 * @return entity

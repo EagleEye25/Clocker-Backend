@@ -77,6 +77,23 @@ class Calender {
 	};
 
 	/**
+	 * Tries to find all entities
+	 * @return entity
+	 */
+	async findAssigned() {
+		let sqlRequest = `
+			SELECT DISTINCT c.*
+			FROM calender c
+		`;
+		const rows = await this.common.findAll(sqlRequest);
+		let calenders = [];
+		for (const row of rows) {
+			calenders.push(new calender(row.id, row.name, row.description));
+		}
+		return calenders;
+	};
+
+	/**
 	 * Creates the given entity in the database
 	 * @params Calender
 	 * returns database insertion status

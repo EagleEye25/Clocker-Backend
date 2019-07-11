@@ -87,6 +87,18 @@ class Employee_Calender {
 		let sqlParams = {$id: id};
 		return this.common.run(sqlRequest, sqlParams);
 	};
+
+	/**
+	 * Deletes an entity using its Id / Primary Key
+	 * @params id
+	 * returns database deletion status
+	 */
+	deleteByEmpID(id) {
+		console.log('here');
+		let sqlRequest = "DELETE FROM employee_calender WHERE employee_id=$id";
+		let sqlParams = {$id: id};
+		return this.common.run(sqlRequest, sqlParams);
+	};
 }
 
 module.exports = Employee_Calender;

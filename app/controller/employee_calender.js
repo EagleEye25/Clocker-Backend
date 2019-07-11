@@ -94,6 +94,19 @@ class Employee_Calender {
 			.then(this.common.editSuccess(res))
 			.catch(this.common.serverError(res));
 	};
+
+	/**
+	 * Deletes an entity using its Id / Primary Key
+	 * @params req, res
+	 * returns database deletion status
+	 */
+	deleteByEmpID(req, res) {
+		let id = req.params.id;
+		console.log('here');
+		this.dao.deleteByEmpID(id)
+			.then(this.common.editSuccess(res))
+			.catch(this.common.serverError(res));
+	};
 }
 
 module.exports = Employee_Calender;

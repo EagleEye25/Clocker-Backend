@@ -75,6 +75,26 @@ class Employee {
 		return employees;
 	};
 
+	// TODO: fix
+	/**
+	 * Tries to find all entities
+	 * @return entity
+	 */
+	async findAssignedToCal(calID) {
+		let sqlRequest = `
+			SELECT e.*
+			FROM employee_calender ec
+			INNER JOIN employee e ON ec.employee_id = e.id
+			WHERE ec.calender_id = ` + calID.toString();
+
+		const rows = await this.common.findAll(sqlRequest);
+		let employees = [];
+		for (const row of rows) {
+			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.active));
+		}
+		return employees;
+	};
+
 // TODO: find employees that doesnt have selected calender assigned
 	// /**
 	//  * Tries to find all entities
@@ -165,6 +185,7 @@ class Employee {
 	deleteById(id) {
 		let sqlRequest = "DELETE FROM employee WHERE id=$id";
 		let sqlParams = {$id: id};
+		console.log('here');
 		return this.common.run(sqlRequest, sqlParams);
 	};
 }

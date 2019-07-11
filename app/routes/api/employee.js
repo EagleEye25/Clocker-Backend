@@ -45,4 +45,8 @@ router.put('/delete/:id', function (req, res) {
   employee.delete(req, res);
 });
 
+router.get('/assigned/cal/employees/:calID', function (req, res) {
+  employee.findAssignedToCal(req, res);
+});
+
 module.exports = router;

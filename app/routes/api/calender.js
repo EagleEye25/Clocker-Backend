@@ -33,6 +33,11 @@ router.get('/unassigned/calender', function (req, res) {
   calender.findUnassigned(res);
 });
 
+router.get('/assigned/calender', function (req, res) {
+  calender.findAssigned(res);
+});
+
+
 router.get('/findByName/:name', function (req, res) {
   calender.findByName(req, res);
 });

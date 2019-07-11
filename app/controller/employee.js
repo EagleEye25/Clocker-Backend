@@ -73,8 +73,9 @@ class Employee {
 	 * @params res
 	 * @return entity
 	 */
-	findUnassignedEmpToCal(res) {
-		this.dao.findUnassignedEmpToCal()
+	findAssignedToCal(req, res) {
+		let calID = req.params.calID;
+		this.dao.findAssignedToCal(calID)
 			.then(this.common.findSuccess(res))
 			.catch(this.common.findError(res));
 	};
