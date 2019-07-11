@@ -3,13 +3,12 @@
  */
 
 class Calender_Times {
-  constructor(id, calender_id, startWeek, startDay, startTime, endWeek, endDay, endTime) {
+  constructor(id, calender_id, startWeek, startDay, startTime, endDay, endTime) {
     this.id = id;
     this.calender_id = calender_id;
     this.startWeek = startWeek;
     this.startDay = startDay;
     this.startTime = startTime;
-    this.endWeek = endWeek;
     this.endDay = endDay;
     this.endTime = endTime;
   }

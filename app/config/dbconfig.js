@@ -69,7 +69,6 @@ let init = function () {
 		startWeek DATETIME,
 		startDay DATETIME,
 		startTime DATETIME,
-		endWeek DATETIME,
 		endDay DATETIME,
 		endTime DATETIME,
 		FOREIGN KEY(calender_id) REFERENCES calender(id))`

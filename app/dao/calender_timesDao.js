@@ -34,7 +34,7 @@ class Calender_Times {
 		const rows = await this.common.findAll(sqlRequest);
 		let c_times = [];
 		for (const row of rows) {
-			c_times.push(new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endWeek, row.endDay, row.endTime));
+			c_times.push(new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endDay, row.endTime));
 		}
 		return c_times;
 	};
@@ -50,7 +50,6 @@ class Calender_Times {
 			WHERE ct.startWeek = $startWeek
 			AND ct.startDay = $startDay
 			AND ct.startTime = $startTime
-			AND ct.endWeek = $endWeek
 			AND ct.endDay = $endDay
 			AND ct.endTime = $endTime
 		`;
@@ -58,12 +57,11 @@ class Calender_Times {
 			$startWeek: c_times.startWeek,
 			$startDay: c_times.startDay,
 			$startTime: c_times.startTime,
-			$endWeek: c_times.endWeek,
 			$endDay: c_times.endDay,
 			$endTime: c_times.endTime
 		};
 		const row = await this.common.findOne(sqlRequest, sqlParams);
-		return new new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endWeek, row.endDay, row.endTime);
+		return new new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endDay, row.endTime);
 	};
 
 	/**
@@ -78,7 +76,7 @@ class Calender_Times {
 		const rows = await this.common.findAll(sqlRequest);
 		let c_times = [];
 		for (const row of rows) {
-			c_times.push(new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endWeek, row.endDay, row.endTime));
+			c_times.push(new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endDay, row.endTime));
 		}
 		return c_times;
 	};
@@ -89,14 +87,13 @@ class Calender_Times {
 	 * returns database insertion status
 	 */
 	create(c_times) {
-		let sqlRequest = `INSERT into calender_times (calender_id, startWeek, startDay, startTime, endWeek, endDay, endTime)
-				VALUES ($calender_id, $startWeek, $startDay, $startTime, $endWeek, $endDay, $endTime)`;
+		let sqlRequest = `INSERT into calender_times (calender_id, startWeek, startDay, startTime, endDay, endTime)
+				VALUES ($calender_id, $startWeek, $startDay, $startTime, $endDay, $endTime)`;
 		let sqlParams = {
 			$calender_id: c_times.calender_id,
 			$startWeek: c_times.startWeek,
 			$startDay: c_times.startDay,
 			$startTime: c_times.startTime,
-			$endWeek: c_times.endWeek,
 			$endDay: c_times.endDay,
 			$endTime: c_times.endTime
 		};
@@ -125,7 +122,6 @@ class Calender_Times {
 			startWeek = $startWeek,
 			startDay = $startDay,
 			startTime = $startTime,
-			endWeek = $endWeek,
 			endDay = $endDay,
 			endTime = $endTime
 			WHERE id=$id`;
@@ -136,7 +132,6 @@ class Calender_Times {
 			$startWeek: c_times.startWeek,
 			$startDay: c_times.startDay,
 			$startTime: c_times.startTime,
-			$endWeek: c_times.endWeek,
 			$endDay: c_times.endDay,
 			$endTime: c_times.endTime
 		};

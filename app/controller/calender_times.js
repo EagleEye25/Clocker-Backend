@@ -66,7 +66,6 @@ class Calender_Times {
 		c_times.startWeek = req.body.sWeek;
 		c_times.startDay = req.body.sDay;
 		c_times.startTime = req.body.sTime;
-		c_times.endWeek = req.body.eWeek;
 		c_times.endDay = req.body.eDay;
 		c_times.endTime = req.body.eTime;
 
@@ -90,7 +89,6 @@ class Calender_Times {
 		c_times.startWeek = req.body.startWeek;
 		c_times.startDay = req.body.startDay;
 		c_times.startTime = req.body.startTime;
-		c_times.endWeek = req.body.endWeek;
 		c_times.endDay = req.body.endDay;
 		c_times.endTime = req.body.endTime;
 
@@ -111,7 +109,6 @@ class Calender_Times {
 		c_times.startWeek = req.body.startWeek;
 		c_times.startDay = req.body.startDay;
 		c_times.startTime = req.body.startTime;
-		c_times.endWeek = req.body.endWeek;
 		c_times.endDay = req.body.endDay;
 		c_times.endTime = req.body.endTime;
 
