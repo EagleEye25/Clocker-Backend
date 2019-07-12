@@ -98,15 +98,20 @@ class Calender {
 	 * @params Calender
 	 * returns database insertion status
 	 */
-	create(calender) {
+	async create(calender) {
 		let sqlRequest = `INSERT into calender (name, description)
-				VALUES ($name, $description)`;
+				VALUES ($name, $description);`;
 
 		let sqlParams = {
 			$name: calender.name,
 			$description: calender.description
 		};
-		return this.common.run(sqlRequest, sqlParams);
+		const req = await this.common.run(sqlRequest, sqlParams)
+			.then(async() => {
+				const cal =  await this.findByName(calender.name);
+				return cal;
+			})
+		return(req);
 	};
 
 	/**
@@ -128,16 +133,39 @@ class Calender {
 		return this.common.run(sqlRequest, sqlParams);
 	};
 
+	// TODO: FIX xD
 	/**
 	 * Deletes an entity using its Id / Primary Key
 	 * @params id
 	 * returns database deletion status
 	 */
-	deleteById(id) {
-		let sqlRequest = "DELETE FROM calender WHERE id=$id";
-		let sqlParams = {$id: id};
-		return this.common.run(sqlRequest, sqlParams);
+	async deleteById(cal_id) {
+		let sqlRequest = `
+			DELETE FROM calender_times
+			WHERE 	calender_id = $cal_id
+			AND		calender_id NOT IN (SELECT DISTINCT calender_id FROM employee_calender);
+			DELETE FROM calender
+			WHERE 	id = $cal_id
+			AND		calender.id NOT IN (SELECT DISTINCT calender_id FROM employee_calender);
+		`;
+		let sqlParams = {$cal_id: cal_id};
+		let id = cal_id
+
+		const req = await this.common.run(sqlRequest, sqlParams)
+			.then(async() => {
+				const res = await this.returnValue(id);
+				return res;
+			})
+		return(req);
 	};
+
+	returnValue(cal_id) {
+		let sqlRequest = `
+			SELECT	CASE WHEN COALESCE( (SELECT id FROM calender WHERE id = $cal_id), 0) > 0 THEN 0 ELSE 1 END AS deleted
+		`;
+		let sqlParams = {$cal_id: cal_id};
+		return this.common.findOne(sqlRequest, sqlParams);
+	}
 }
 
 module.exports = Calender;

@@ -80,7 +80,6 @@ class Common {
 						new DaoError(21, "Entity not found")
 					)
 				} else {
-					console.log(err);
 					reject(
 						new DaoError(11, "Invalid arguments")
 					)

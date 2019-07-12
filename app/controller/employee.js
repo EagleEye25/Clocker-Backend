@@ -80,6 +80,18 @@ class Employee {
 			.catch(this.common.findError(res));
 	};
 
+	/**
+	 * Tries to find all entities
+	 * @params res
+	 * @return entity
+	 */
+	findUnassignedTOCal(req, res) {
+		let calID = req.params.calID;
+		this.dao.findUnassignedTOCal(calID)
+			.then(this.common.findSuccess(res))
+			.catch(this.common.findError(res));
+	};
+
 
 	/**
 	 * Creates the given entity in the database

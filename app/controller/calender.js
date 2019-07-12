@@ -121,9 +121,9 @@ class Calender {
 	 * returns database deletion status
 	 */
 	deleteById(req, res) {
-		let id = req.params.id;
+		let cal_id = req.params.cal_id;
 
-		this.dao.deleteById(id)
+		this.dao.deleteById(cal_id)
 			.then(this.common.editSuccess(res))
 			.catch(this.common.serverError(res));
 	};

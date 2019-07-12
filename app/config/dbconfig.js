@@ -90,7 +90,6 @@ let init = function () {
 		reason_id INTEGER,
 		clock_in DATETIME,
 		clock_out DATETIME,
-		overtime DATETIME,
 		FOREIGN KEY(employee_id) REFERENCES employee(id),
 		FOREIGN KEY(reason_id) REFERENCES reason(id))`
 	);

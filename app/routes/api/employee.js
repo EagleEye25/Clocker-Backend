@@ -49,4 +49,8 @@ router.get('/assigned/cal/employees/:calID', function (req, res) {
   employee.findAssignedToCal(req, res);
 });
 
+router.get('/unassigned/employees/calendars/:calID', function (req, res) {
+  employee.findUnassignedTOCal(req, res);
+});
+
 module.exports = router;

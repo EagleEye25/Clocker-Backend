@@ -23,7 +23,7 @@ class Clocking {
 		let clockings = [];
 		for (const row of rows) {
 			clockings.push(new clocking(row.id, row.employee_id, row.reason_id, row.clock_in,
-				row.clock_out, row.overtime));
+				row.clock_out));
 		}
 		return clockings;
 	};
@@ -37,7 +37,7 @@ class Clocking {
 		let sqlParams = {$employee_id: employee_id};
 		const row = await this.common.findOne(sqlRequest, sqlParams);
 		return new clocking(row.id, row.employee_id, row.reason_id, row.clock_in,
-			row.clock_out, row.overtime);
+			row.clock_out);
 	};
 
 	/**
@@ -47,14 +47,13 @@ class Clocking {
 	 */
 	clockIn(clocking) {
 		let sqlRequest = `INSERT into clocking (employee_id, reason_id, clock_in,
-											clock_out, overtime)
-			VALUES ($employee_id, $reason_id, $clock_in, $clock_out, $overtime)`;
+											clock_out)
+			VALUES ($employee_id, $reason_id, $clock_in, $clock_out)`;
 		let sqlParams = {
 			$employee_id: clocking.employee_id,
 			$reason_id: clocking.reason_id,
 			$clock_in: clocking.clock_in,
 			$clock_out: clocking.clock_out,
-			$overtime: clocking.overtime
 		};
 		return this.common.run(sqlRequest, sqlParams);
 	};
@@ -70,7 +69,6 @@ class Clocking {
 			reason_id=$reason_id,
 			clock_in=$clock_in,
 			clock_out=$clock_out,
-			overtime=$overtime
 			WHERE id=$id`;
 
 		let sqlParams = {
@@ -79,7 +77,6 @@ class Clocking {
 			$reason_id: clocking.reason_id,
 			$clock_in: clocking.clock_in,
 			$clock_out: clocking.clock_out,
-			$overtime: clocking.overtime
 		};
 		return this.common.run(sqlRequest, sqlParams);
 	};

@@ -25,7 +25,7 @@ router.put('/:id', function (req, res) {
   calender.update(req, res);
 });
 
-router.delete('/:id', function (req, res) {
+router.delete('/:cal_id', function (req, res) {
   calender.deleteById(req, res);
 });
 

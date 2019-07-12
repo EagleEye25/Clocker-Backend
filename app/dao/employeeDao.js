@@ -95,6 +95,25 @@ class Employee {
 		return employees;
 	};
 
+	/**
+	 * Tries to find all entities
+	 * @return entity
+	 */
+	async findUnassignedTOCal(calID) {
+		let sqlRequest = `
+		SELECT	e.*
+		FROM	employee_calender ec
+		INNER JOIN	employee e ON e.id = ec.employee_id
+		WHERE	ec.calender_id NOT IN (` + calID.toString() + `)`;
+
+		const rows = await this.common.findAll(sqlRequest);
+		let employees = [];
+		for (const row of rows) {
+			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.active));
+		}
+		return employees;
+	};
+
 // TODO: find employees that doesnt have selected calender assigned
 	// /**
 	//  * Tries to find all entities

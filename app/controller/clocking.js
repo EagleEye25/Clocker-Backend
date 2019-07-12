@@ -59,7 +59,6 @@ class Clocking {
 		clocking.reason_id = req.body.reason_id;
 		clocking.clock_in = req.body.clock_in;
 		clocking.clock_out = req.body.clock_out;
-		clocking.overtime = req.body.overtime;
 
 		return this.dao.clockIn(clocking)
 			.then(this.common.editSuccess(res))
@@ -78,7 +77,6 @@ class Clocking {
 		clocking.reason_id = req.body.reason_id;
 		clocking.clock_in = req.body.clock_in;
 		clocking.clock_out = req.body.clock_out;
-		clocking.overtime = req.body.overtime;
 
 		return this.dao.clockOut(clocking)
 			.then(this.common.editSuccess(res))
