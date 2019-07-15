@@ -102,7 +102,6 @@ class Employee_Calender {
 	 */
 	deleteByEmpID(req, res) {
 		let id = req.params.id;
-		console.log('here');
 		this.dao.deleteByEmpID(id)
 			.then(this.common.editSuccess(res))
 			.catch(this.common.serverError(res));

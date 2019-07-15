@@ -61,7 +61,7 @@ class Calender_Times {
 			$endTime: c_times.endTime
 		};
 		const row = await this.common.findOne(sqlRequest, sqlParams);
-		return new new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endDay, row.endTime);
+		return new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endDay, row.endTime);
 	};
 
 	/**
@@ -81,12 +81,13 @@ class Calender_Times {
 		return c_times;
 	};
 
+	// TODO: return ID after creating
 	/**
 	 * Creates the given entity in the database
 	 * @params Calender_Times
 	 * returns database insertion status
 	 */
-	create(c_times) {
+	async create(c_times) {
 		let sqlRequest = `INSERT into calender_times (calender_id, startWeek, startDay, startTime, endDay, endTime)
 				VALUES ($calender_id, $startWeek, $startDay, $startTime, $endDay, $endTime)`;
 		let sqlParams = {
@@ -97,7 +98,14 @@ class Calender_Times {
 			$endDay: c_times.endDay,
 			$endTime: c_times.endTime
 		};
-		return this.common.run(sqlRequest, sqlParams);
+		let time = c_times;
+		let req = await this.common.run(sqlRequest, sqlParams)
+			.then(async() => {
+				console.log(time);
+				const calTimes = await this.findExisting(time);
+				return calTimes
+			})
+			return(req);
 
 // TODO: create method to find calendar times
 		// const req = await this.common.run(sqlRequest, sqlParams)

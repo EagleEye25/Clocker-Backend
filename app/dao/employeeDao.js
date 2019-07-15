@@ -95,6 +95,7 @@ class Employee {
 		return employees;
 	};
 
+	// TODO: FIX
 	/**
 	 * Tries to find all entities
 	 * @return entity
@@ -102,36 +103,19 @@ class Employee {
 	async findUnassignedTOCal(calID) {
 		let sqlRequest = `
 		SELECT	e.*
-		FROM	employee_calender ec
-		INNER JOIN	employee e ON e.id = ec.employee_id
-		WHERE	ec.calender_id NOT IN (` + calID.toString() + `)`;
+		FROM	employee e
+		LEFT JOIN employee_calender ec ON e.id = ec.employee_id
+		WHERE	(coalesce(ec.calender_id, 0) NOT IN (` + calID.toString() + `))`;
 
 		const rows = await this.common.findAll(sqlRequest);
 		let employees = [];
 		for (const row of rows) {
-			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.active));
+			// if (row.active === 0) {
+				employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.active));
+			// }
 		}
 		return employees;
 	};
-
-// TODO: find employees that doesnt have selected calender assigned
-	// /**
-	//  * Tries to find all entities
-	//  * @return entity
-	//  */
-	// async findUnassignedEmpToCal(calID) {
-	// 	let sqlRequest = `
-	// 	SELECT employee.*
-	// 	FROM employee
-	// 	LEFT JOIN employee_calender ON calender.id = employee_calender.calender_id
-	// 	WHERE employee_calender.calender_id IS NULL`;
-	// 	const rows = await this.common.findAll(sqlRequest);
-	// 	let employees = [];
-	// 	for (const row of rows) {
-	// 		employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password));
-	// 	}
-	// 	return employees;
-	// };
 
 	/**
 	 * Creates the given entity in the database
