@@ -14,5 +14,6 @@ router.use('/employee_card', require('./api/employee_card'));
 router.use('/employee', require('./api/employee'));
 router.use('/reason', require('./api/reason'));
 router.use('/token', require('./api/token'));
+router.use('/reports', require('./api/reports'));
 
 module.exports = router;
