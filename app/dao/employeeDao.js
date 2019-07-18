@@ -40,7 +40,7 @@ class Employee {
 		if (!row) {
 			return 'Doesnt Exist';
 		}
-		return new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id);
+		return new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id, row.active);
 	};
 
 	/**
@@ -73,6 +73,27 @@ class Employee {
 			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.active));
 		}
 		return employees;
+	};
+
+	/**
+	 * Returns the employee based on the card number
+	 * @return employee or null if no active employee is found
+	 */
+	async findEmployeeByCard(cardNo) {
+		let sqlRequest = `
+		SELECT 	e.*
+		FROM		card c
+						INNER JOIN employee_card ec ON ec.card_id = c.id
+						INNER JOIN employee e ON e.id = ec.employee_id
+		WHERE		c.card_no = $cardNo
+		AND			ec.active = 1
+		AND			e.active = 1`;
+		const sqlParams = {$cardNo: cardNo};
+		const row = await this.common.findOne(sqlRequest, sqlParams);
+		if (!row) {
+			return null;
+		}
+		return new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id, row.active);
 	};
 
 	// TODO: fix

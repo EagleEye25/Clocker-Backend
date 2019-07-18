@@ -9,6 +9,7 @@
     "cors": "^2.8.5",
     "ejs": "*",
     "express": "*",
+    "jsonwebtoken": "^8.5.1",
     "sqlite": "*"
   },
   "license": "LGPL-3.0"

@@ -35,6 +35,9 @@ app.listen(port, function () {
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-/* Router configuration */
+// Non authenticated routes go here
+app.use('/app', require('./app/routes/open_routes'));
+
+// Routes that require authentication now go here
 const REST_API_ROOT = '/api';
-app.use(REST_API_ROOT, require('./app/routes/router'));
+app.use(REST_API_ROOT, require('./app/routes/auth_routes'));
