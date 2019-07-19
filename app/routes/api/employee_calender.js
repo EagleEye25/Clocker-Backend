@@ -30,7 +30,6 @@ router.delete('/:id', function (req, res) {
 });
 
 router.delete('/remove/emp/:id', function (req, res) {
-  console.log('here');
   e_calender.deleteByEmpID(req, res);
 });
 module.exports = router;

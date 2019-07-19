@@ -101,7 +101,6 @@ class Calender_Times {
 		let time = c_times;
 		let req = await this.common.run(sqlRequest, sqlParams)
 			.then(async() => {
-				console.log(time);
 				const calTimes = await this.findExisting(time);
 				return calTimes
 			})

@@ -6,7 +6,6 @@ module.exports = function(req,res,next) {
 	if (token) {
 		// verifies secret and checks exp
 		jwt.verify(token, config.secret, function(err, decoded) {
-			console.log('@@@@@ authJWT decoded: ', decoded);
 			if (err) {
 				return res.status(401).json({"error": true, "message": 'Unauthorized access.' });
 			}

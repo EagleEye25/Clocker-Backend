@@ -15,7 +15,6 @@ router.post('/refreshToken', function (req, res) {
     if (token) {
 			// verifies secret and checks exp
 			jwt.verify(token, config.refreshTokenSecret, function(err, decoded) {
-				console.log('@@@@@ decoded: ', decoded);
 				if (err) {
 					return res.status(404).json(response);
 				}

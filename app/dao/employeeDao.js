@@ -209,7 +209,6 @@ class Employee {
 	deleteById(id) {
 		let sqlRequest = "DELETE FROM employee WHERE id=$id";
 		let sqlParams = {$id: id};
-		console.log('here');
 		return this.common.run(sqlRequest, sqlParams);
 	};
 }

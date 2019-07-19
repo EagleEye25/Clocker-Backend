@@ -149,11 +149,10 @@ class Calender {
 			AND		calender.id NOT IN (SELECT DISTINCT calender_id FROM employee_calender);
 		`;
 		let sqlParams = {$cal_id: cal_id};
-		let id = cal_id
 
 		const req = await this.common.run(sqlRequest, sqlParams)
 			.then(async() => {
-				const res = await this.returnValue(id);
+				const res = await this.returnValue(cal_id);
 				return res;
 			})
 		return(req);
