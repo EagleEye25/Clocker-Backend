@@ -167,12 +167,13 @@ class Employee {
 	 * @return true if the entity has been updated, false if not found and not updated
 	 */
 	update(employee) {
-		let sqlRequest = "UPDATE employee SET " +
-			"name=$name, " +
-			"admin=$admin, " +
-			"reporting_admin=$reporting_admin, " +
-			"password=$password, " +
-			"WHERE id=$id";
+		let sqlRequest = `UPDATE employee SET
+			name=$name,
+			admin=$admin,
+			reporting_admin=$reporting_admin,
+			password=$password,
+			active=$active
+			WHERE id=$id`;
 
 		let sqlParams = {
 			$id: employee.id,
@@ -180,6 +181,7 @@ class Employee {
 			$admin: employee.admin,
 			$reporting_admin: employee.reporting_admin,
 			$password: employee.password,
+			$active: employee.active
 		};
 		return this.common.run(sqlRequest, sqlParams);
 	};
