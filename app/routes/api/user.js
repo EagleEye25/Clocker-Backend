@@ -10,8 +10,8 @@ router.post('/refreshToken', function (req, res) {
     const postData = req.body;
     const response = {
       "success": false
-    }
-    const token = postData.token;
+		}
+    const token = postData.refreshToken;
     if (token) {
 			// verifies secret and checks exp
 			jwt.verify(token, config.refreshTokenSecret, function(err, decoded) {
@@ -25,9 +25,6 @@ router.post('/refreshToken', function (req, res) {
 				empDao.findByName(userName).then((emp) => {
 					if (typeof emp === 'string') {
 							throw 'invalid user';
-					}
-					if (emp.password !== userPass) {
-							throw 'invalid password';
 					}
 					if (!emp.active) {
 							throw 'inactive user';
