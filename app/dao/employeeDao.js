@@ -213,6 +213,26 @@ class Employee {
 		let sqlParams = {$id: id};
 		return this.common.run(sqlRequest, sqlParams);
 	};
+
+	/**
+	 * Tries to find an entity using its namey
+	 * @params id
+	 * @return entity
+	 */
+	async findAdmin() {
+		let sqlRequest = `
+		SELECT (1) AS found
+		FROM employee
+		WHERE admin=1
+		AND active=1`;
+		const row = await this.common.findOne(sqlRequest);
+		console.log('here', row);
+		if (!row.found < 1) {
+			console.log('in false')
+			return false;
+		} else {
+		return true;
+	}};
 }
 
 module.exports = Employee;
