@@ -6,15 +6,22 @@ const cors = require("cors");
 /* Database configuration */
 const database = require('./app/config/dbconfig');
 
-const whitelist = ['http://localhost'];
+const whitelist = ['http://localhost', 'chrome-extension://'];
 const corsOptions = {
 	origin (origin, callback) {
-		for (const url of whitelist){
-			if (!origin || origin.startsWith(url)) {
-				callback(null, true);
-			} else {
-				callback(new Error('Not allowed by CORS'));
+		let allowed = false;
+		if (origin) {
+			for (const url of whitelist) {
+				if (origin.startsWith(url)) {
+					allowed = true;
+					break;
+				}
 			}
+		}
+		if (!origin || allowed) {
+			callback(null, true);
+		} else {
+			callback(new Error('Not allowed by CORS'));
 		}
 	}
 };
@@ -35,9 +42,10 @@ app.listen(port, function () {
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-// Non authenticated routes go here
+// Non authenticated
 app.use('/app', require('./app/routes/open_routes'));
 
-// Routes that require authentication now go here
+// Routes that require authentication
 const REST_API_ROOT = '/api';
 app.use(REST_API_ROOT, require('./app/routes/auth_routes'));
+

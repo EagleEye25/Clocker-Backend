@@ -133,30 +133,39 @@ class Calender {
 		return this.common.run(sqlRequest, sqlParams);
 	};
 
-	// TODO: FIX xD
 	/**
 	 * Deletes an entity using its Id / Primary Key
 	 * @params id
 	 * returns database deletion status
 	 */
 	async deleteById(cal_id) {
+		let success = await this.deleteCalenderTimes(+cal_id).catch(() => false);
+		const calender = await this.findById(+cal_id).catch(() => false);
+		if (success || (calender && calender.id) ) {
+			success = await this.deleteCalenderRecords(+cal_id).catch(() => false);
+		}
+		return this.returnValue(+cal_id);
+	};
+
+	deleteCalenderTimes(cal_id) {
 		let sqlRequest = `
 			DELETE FROM calender_times
 			WHERE 	calender_id = $cal_id
 			AND		calender_id NOT IN (SELECT DISTINCT calender_id FROM employee_calender);
+		`;
+		let sqlParams = {$cal_id: +cal_id};
+		return this.common.run(sqlRequest, sqlParams);
+	};
+
+	deleteCalenderRecords(cal_id) {
+		let sqlRequest = `
 			DELETE FROM calender
 			WHERE 	id = $cal_id
 			AND		calender.id NOT IN (SELECT DISTINCT calender_id FROM employee_calender);
 		`;
-		let sqlParams = {$cal_id: cal_id};
-
-		const req = await this.common.run(sqlRequest, sqlParams)
-			.then(async() => {
-				const res = await this.returnValue(cal_id);
-				return res;
-			})
-		return(req);
-	};
+		let sqlParams = {$cal_id: +cal_id};
+		return this.common.run(sqlRequest, sqlParams);
+	}
 
 	returnValue(cal_id) {
 		let sqlRequest = `
