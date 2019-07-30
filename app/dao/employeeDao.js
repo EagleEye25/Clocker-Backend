@@ -226,13 +226,8 @@ class Employee {
 		WHERE admin=1
 		AND active=1`;
 		const row = await this.common.findOne(sqlRequest);
-		console.log('here', row);
-		if (!row.found < 1) {
-			console.log('in false')
-			return false;
-		} else {
-		return true;
-	}};
+		return row;
+	}
 }
 
 module.exports = Employee;
