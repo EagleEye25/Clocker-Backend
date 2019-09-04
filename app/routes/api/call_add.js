@@ -16,12 +16,13 @@ router.post('/', function (req, res) {
 });
 
 router.get('/Admin', function (req, res) {
-  let found = emp.findAdmin();
-  if (found < 1) {
-    return res.status(200).json({"found": false});
-  } else {
-    return res.status(200).json({"found": true});
-  }
+  return emp.findAdmin().then((found) => {
+    if (!found) {
+      return res.status(200).json({"found": false});
+    } else {
+      return res.status(200).json({"found": true});
+    }
+  });
 });
 
 

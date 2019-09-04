@@ -219,14 +219,15 @@ class Employee {
 	 * @params id
 	 * @return entity
 	 */
-	async findAdmin() {
+	findAdmin() {
 		let sqlRequest = `
 		SELECT (1) AS found
 		FROM employee
 		WHERE admin=1
 		AND active=1`;
-		const row = await this.common.findOne(sqlRequest);
-		return row;
+		return this.common.findOne(sqlRequest).catch((err) => {
+			return false;
+		});
 	}
 }
 
