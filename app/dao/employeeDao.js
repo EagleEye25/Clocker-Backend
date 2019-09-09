@@ -96,25 +96,25 @@ class Employee {
 		return new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id, row.active);
 	};
 
-	// TODO: fix
-	/**
-	 * Tries to find all entities
-	 * @return entity
-	 */
-	async findAssignedToCal(calID) {
-		let sqlRequest = `
-			SELECT e.*
-			FROM employee_calender ec
-			INNER JOIN employee e ON ec.employee_id = e.id
-			WHERE ec.calender_id = ` + calID.toString();
+	// // TODO: fix
+	// /**
+	//  * Tries to find all entities
+	//  * @return entity
+	//  */
+	// async findAssignedToCal(calID) {
+	// 	let sqlRequest = `
+	// 		SELECT e.*
+	// 		FROM employee_calender ec
+	// 		INNER JOIN employee e ON ec.employee_id = e.id
+	// 		WHERE ec.calender_id = ` + calID.toString();
 
-		const rows = await this.common.findAll(sqlRequest);
-		let employees = [];
-		for (const row of rows) {
-			employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.active));
-		}
-		return employees;
-	};
+	// 	const rows = await this.common.findAll(sqlRequest);
+	// 	let employees = [];
+	// 	for (const row of rows) {
+	// 		employees.push(new employee(row.id, row.name, row.admin, row.reporting_admin, row.active));
+	// 	}
+	// 	return employees;
+	// };
 
 	// TODO: FIX
 	/**
