@@ -4,6 +4,9 @@ const clocking = require('../model/clocking');
 /* Load DAO Common functions */
 const daoCommon = require('./commons/daoCommon');
 
+const Employee = require('../dao/employeeDao');
+const emp = new Employee();
+
 /**
  * Calender Data Access Object
  */
@@ -81,6 +84,8 @@ class Clocking {
 		return this.common.run(sqlRequest, sqlParams);
 	};
 
+	// TODO: FIX for when no records in db
+
 	async determineAction(card_no) {
 		let sqlRequest = `
 		SELECT clocking.id, clocking.employee_id, clocking.clock_in, clocking.clock_out
@@ -91,22 +96,34 @@ class Clocking {
 		ORDER BY clocking.id DESC LIMIT 1`;
 
 		let sqlParams = {$card_no: card_no};
-		const row = await this.common.findOne(sqlRequest, sqlParams);
+		let data;
+		let create;
+		const row = await this.common.findOne(sqlRequest, sqlParams).then(() => {
+			console.log('then');
+		  data = {
+				id: row.id,
+				employee_id: row.employee_id,
+				action: ''
+			}
 
-		let data = {
-			id: row.id,
-			employee_id: row.employee_id,
-			action: ''
-		}
-
-		if (row.clock_out == null) {
-			data.action = 'Clock_Out';
-			data.clock_in = row.clock_in;
-			return data;
-		} else {
-			data.action = 'Clock_In';
-			return data;
-		}
+			if (row.clock_out == null) {
+				data.action = 'Clock_Out';
+				data.clock_in = row.clock_in;
+				return data;
+			} else {
+				data.action = 'Clock_In';
+				return data;
+			}
+		}).catch(async(err) => {
+			console.log('catch');
+			create = await emp.findEmployeeByCard(card_no).then((found) => {
+				found.action = 'Clock_In';
+				create = found;
+				return found;
+			});
+			console.log('return', create);
+			return create;
+		});
 	}
 }
 
