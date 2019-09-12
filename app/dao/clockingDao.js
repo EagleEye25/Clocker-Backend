@@ -96,34 +96,35 @@ class Clocking {
 		ORDER BY clocking.id DESC LIMIT 1`;
 
 		let sqlParams = {$card_no: card_no};
-		let data;
-		let create;
-		const row = await this.common.findOne(sqlRequest, sqlParams).then(() => {
-			console.log('then');
-		  data = {
-				id: row.id,
-				employee_id: row.employee_id,
+		const row = await this.common.findOne(sqlRequest, sqlParams).then((result) => {
+		  const data = {
+				id: result.id,
+				employee_id: result.employee_id,
 				action: ''
 			}
 
-			if (row.clock_out == null) {
+			if (result.clock_out == null) {
 				data.action = 'Clock_Out';
-				data.clock_in = row.clock_in;
+				data.clock_in = result.clock_in;
 				return data;
 			} else {
 				data.action = 'Clock_In';
 				return data;
 			}
 		}).catch(async(err) => {
-			console.log('catch');
-			create = await emp.findEmployeeByCard(card_no).then((found) => {
-				found.action = 'Clock_In';
-				create = found;
-				return found;
+			const create = await emp.findEmployeeByCard(card_no).catch(() => {
+				return { id: null };
 			});
-			console.log('return', create);
-			return create;
+
+			const data = {
+				id: null,
+				employee_id: create.id,
+				action: 'Clock_In'
+			};
+			return data;
 		});
+
+		return row;
 	}
 }
 
