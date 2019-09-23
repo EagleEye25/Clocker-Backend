@@ -66,25 +66,20 @@ class Clocking {
 	 * @params clocking
 	 * returns database insertion status
 	 */
-	clockOut(clocking) {
+	async clockOut(clocking) {
 		let sqlRequest = `UPDATE clocking SET
-			employee_id=$employee_id,
 			reason_id=$reason_id,
-			clock_in=$clock_in,
-			clock_out=$clock_out,
+			clock_out=$clock_out
 			WHERE id=$id`;
 
 		let sqlParams = {
 			$id: clocking.id,
-			$employee_id: clocking.employee_id,
 			$reason_id: clocking.reason_id,
-			$clock_in: clocking.clock_in,
 			$clock_out: clocking.clock_out,
 		};
-		return this.common.run(sqlRequest, sqlParams);
-	};
 
-	// TODO: FIX for when no records in db
+		return await this.common.run(sqlRequest, sqlParams);
+	};
 
 	async determineAction(card_no) {
 		let sqlRequest = `
