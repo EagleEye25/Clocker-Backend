@@ -36,4 +36,8 @@ router.get('/times/unAssigned', function (req, res) {
 router.get('/times/existing/:c_times', function (req, res) {
   c_times.findExisting(req, res);
 });
+
+router.get('/assigned/cal/times/:calID', function (req, res) {
+  c_times.findAssignedToCal(req, res);
+});
 module.exports = router;

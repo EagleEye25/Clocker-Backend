@@ -30,7 +30,7 @@ class Calender_Times {
 	 * @return entity
 	 */
 	async findAll() {
-		let sqlRequest = "SELECT * FROM calender_times";
+		let sqlRequest = `SELECT * FROM calender_times`;
 		const rows = await this.common.findAll(sqlRequest);
 		let c_times = [];
 		for (const row of rows) {
@@ -154,6 +154,25 @@ class Calender_Times {
 		let sqlRequest = "DELETE FROM calender_times WHERE id=$id";
 		let sqlParams = {$id: id};
 		return this.common.run(sqlRequest, sqlParams);
+	};
+
+	// /**
+	//  * Tries to find all entities
+	//  * @return entity
+	//  */
+	async findAssignedToCal(calID) {
+		let sqlRequest = `
+			SELECT ct.*
+			FROM calender_times ct
+			INNER JOIN calender c ON ct.calender_id = c.id
+			WHERE c.id = ` + calID.toString();
+
+		const rows = await this.common.findAll(sqlRequest);
+		let c_times = [];
+		for (const row of rows) {
+			c_times.push(new calender_times(row.id, row.calender_id, row.startWeek, row.startDay, row.startTime, row.endDay, row.endTime));
+		}
+		return c_times;
 	};
 }
 

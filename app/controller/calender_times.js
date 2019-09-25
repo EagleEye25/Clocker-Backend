@@ -129,6 +129,18 @@ class Calender_Times {
 			.then(this.common.editSuccess(res))
 			.catch(this.common.serverError(res));
 	};
+
+	/**
+	 * Tries to find all entities
+	 * @params res
+	 * @return entity
+	 */
+	findAssignedToCal(req, res) {
+		let calID = req.params.calID;
+		this.dao.findAssignedToCal(calID)
+			.then(this.common.findSuccess(res))
+			.catch(this.common.findError(res));
+	};
 }
 
 module.exports = Calender_Times;
