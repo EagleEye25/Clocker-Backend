@@ -174,6 +174,23 @@ class Calender_Times {
 		}
 		return c_times;
 	};
+
+	/**
+	 * unassigns time from the given entity in the database
+	 * @params time ID
+	 * @return true if the entity has been updated, false if not found and not updated
+	 */
+	unassignFromCal(id) {
+		let sqlRequest = `UPDATE calender_times SET
+			calender_id=$calender_id
+			WHERE id=$id`;
+
+		let sqlParams = {
+			$id: id,
+			$calender_id: null,
+		};
+		return this.common.run(sqlRequest, sqlParams);
+	};
 }
 
 module.exports = Calender_Times;

@@ -141,6 +141,18 @@ class Calender_Times {
 			.then(this.common.findSuccess(res))
 			.catch(this.common.findError(res));
 	};
+
+	/**
+	 * Deletes an entity using its Id / Primary Key
+	 * @params req, res
+	 * returns database deletion status
+	 */
+	unassignFromCal(req, res) {
+		let id = req.params.id;
+		this.dao.unassignFromCal(id)
+			.then(this.common.editSuccess(res))
+			.catch(this.common.serverError(res));
+	};
 }
 
 module.exports = Calender_Times;
