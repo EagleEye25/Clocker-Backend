@@ -81,6 +81,8 @@ class Clocking {
 		return await this.common.run(sqlRequest, sqlParams);
 	};
 
+	// TODO: fix clocking procedure for non active employees
+
 	async determineAction(card_no) {
 		let sqlRequest = `
 		SELECT clocking.id, clocking.employee_id, clocking.clock_in, clocking.clock_out
