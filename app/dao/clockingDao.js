@@ -88,8 +88,9 @@ class Clocking {
 		SELECT clocking.id, clocking.employee_id, clocking.clock_in, clocking.clock_out
 		FROM  clocking
 		LEFT JOIN card ON card.id = employee_card.card_id
-    LEFT JOIN employee_card ON clocking.employee_id = employee_card.employee_id
-		WHERE card.card_no = $card_no
+		LEFT JOIN employee_card ON clocking.employee_id = employee_card.employee_id
+		LEFT JOIN employee on clocking.employee_id = employee.id
+		WHERE card.card_no = $card_no AND employee.active = 1
 		ORDER BY clocking.id DESC LIMIT 1`;
 
 		let sqlParams = {$card_no: card_no};

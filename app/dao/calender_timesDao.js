@@ -81,7 +81,6 @@ class Calender_Times {
 		return c_times;
 	};
 
-	// TODO: return ID after creating
 	/**
 	 * Creates the given entity in the database
 	 * @params Calender_Times
