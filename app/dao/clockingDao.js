@@ -81,8 +81,6 @@ class Clocking {
 		return await this.common.run(sqlRequest, sqlParams);
 	};
 
-	// TODO: fix clocking procedure for non active employees
-
 	async determineAction(card_no) {
 		let sqlRequest = `
 		SELECT clocking.id, clocking.employee_id, clocking.clock_in, clocking.clock_out
@@ -111,7 +109,7 @@ class Clocking {
 			}
 		}).catch(async(err) => {
 			const create = await emp.findEmployeeByCard(card_no).catch(() => {
-				return { id: null };
+				return { employee_id: null };
 			});
 
 			const data = {

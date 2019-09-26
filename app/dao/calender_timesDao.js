@@ -104,17 +104,6 @@ class Calender_Times {
 				return calTimes
 			})
 			return(req);
-
-// TODO: create method to find calendar times
-		// const req = await this.common.run(sqlRequest, sqlParams)
-		// .then(async() => {
-		// 	const cTime =  await this.findByName(employee.name);
-		// 	return cTime;
-		// })
-		// return(req);
-
-
-
 	};
 
 	/**
