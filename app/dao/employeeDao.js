@@ -96,7 +96,6 @@ class Employee {
 		return new employee(row.id, row.name, row.admin, row.reporting_admin, row.password, row.calender_id, row.active);
 	};
 
-	// // TODO: fix
 	// /**
 	//  * Tries to find all entities
 	//  * @return entity
@@ -116,7 +115,6 @@ class Employee {
 		return employees;
 	};
 
-	// TODO: FIX
 	/**
 	 * Tries to find all entities
 	 * @return entity
