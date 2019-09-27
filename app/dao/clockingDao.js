@@ -122,6 +122,17 @@ class Clocking {
 
 		return row;
 	}
+
+	/**
+	 * Deletes an entity using its Id / Primary Key
+	 * @params id
+	 * returns database deletion status
+	 */
+	async deleteByEmpID(id) {
+		let sqlRequest = "DELETE FROM clocking WHERE employee_id=$id";
+		let sqlParams = {$id: id};
+		return await this.common.run(sqlRequest, sqlParams);
+	};
 }
 
 module.exports = Clocking;

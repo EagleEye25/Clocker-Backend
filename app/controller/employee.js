@@ -129,6 +129,7 @@ class Employee {
 		emp.reporting_admin = req.body.reporting_admin;
 		emp.password = req.body.password;
 		emp.calender_id = req.body.calender_id;
+		emp.active = req.body.active;
 
 		return this.dao.update(emp)
 			.then(this.common.editSuccess(res))

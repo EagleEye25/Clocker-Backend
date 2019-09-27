@@ -103,6 +103,17 @@ class Employee_Card {
 		let sqlParams = {$id: id};
 		return this.common.run(sqlRequest, sqlParams);
 	};
+
+	/**
+	 * Deletes an entity using its Id / Primary Key
+	 * @params id
+	 * returns database deletion status
+	 */
+	deleteByEmpID(id) {
+		let sqlRequest = "DELETE FROM employee_card WHERE employee_id=$id";
+		let sqlParams = {$id: id};
+		return this.common.run(sqlRequest, sqlParams);
+	};
 }
 
 module.exports = Employee_Card;

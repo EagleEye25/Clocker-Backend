@@ -4,6 +4,17 @@ const employee = require('../model/employee');
 /* Load DAO Common functions */
 const daoCommon = require('./commons/daoCommon');
 
+const Employee_Calender = require('../dao/employee_calenderDao');
+const empCal = new Employee_Calender();
+
+const Employee_Card = require('../dao/employee_cardDao');
+const empCard = new Employee_Card();
+
+
+const Clocking = require('../dao/employee_cardDao');
+const clock = new Clocking();
+
+
 /**
  * Employee Data Access Object
  */
@@ -206,7 +217,10 @@ class Employee {
 	 * @params id
 	 * returns database deletion status
 	 */
-	deleteById(id) {
+	async deleteById(id) {
+		let delCal = await empCal.deleteByEmpID(id);
+		let delCard = await empCard.deleteByEmpID(id);
+		let delClock = await clock.deleteByEmpID(id);
 		let sqlRequest = "DELETE FROM employee WHERE id=$id";
 		let sqlParams = {$id: id};
 		return this.common.run(sqlRequest, sqlParams);
