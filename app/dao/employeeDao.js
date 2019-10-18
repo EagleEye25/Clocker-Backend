@@ -10,11 +10,6 @@ const empCal = new Employee_Calender();
 const Employee_Card = require('../dao/employee_cardDao');
 const empCard = new Employee_Card();
 
-
-const Clocking = require('../dao/employee_cardDao');
-const clock = new Clocking();
-
-
 /**
  * Employee Data Access Object
  */
@@ -217,10 +212,27 @@ class Employee {
 	 * @params id
 	 * returns database deletion status
 	 */
+	async deleteClockingEmp(id) {
+		let sqlRequest = "DELETE FROM clocking WHERE employee_id=$id";
+		let sqlParams = {$id: id};
+		let k = await this.common.run(sqlRequest, sqlParams);
+		console.log(k);
+	};
+
+	/**
+	 * Deletes an entity using its Id / Primary Key
+	 * @params id
+	 * returns database deletion status
+	 */
+	// TODO: account for non changes
 	async deleteById(id) {
-		let delCal = await empCal.deleteByEmpID(id);
-		let delCard = await empCard.deleteByEmpID(id);
-		let delClock = await clock.deleteByEmpID(id);
+		console.log('0');
+		await empCal.deleteByEmpID(id);
+		console.log('1')
+		await empCard.deleteByEmpID(id);
+		console.log('2')
+		await this.deleteClockingEmp(id);
+		console.log('3')
 		let sqlRequest = "DELETE FROM employee WHERE id=$id";
 		let sqlParams = {$id: id};
 		return this.common.run(sqlRequest, sqlParams);

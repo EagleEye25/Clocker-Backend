@@ -93,10 +93,11 @@ class Employee_Calender {
 	 * @params id
 	 * returns database deletion status
 	 */
-	deleteByEmpID(id) {
+	async deleteByEmpID(id) {
 		let sqlRequest = "DELETE FROM employee_calender WHERE employee_id=$id";
 		let sqlParams = {$id: id};
-		return this.common.run(sqlRequest, sqlParams);
+		let k = await this.common.run(sqlRequest, sqlParams);
+		console.log('here', k);
 	};
 }
 
