@@ -266,6 +266,14 @@ class Reports {
     return retObject;
   }
 
+  /**
+   * @returns Object of reasons:counts of log out reasons (for non-work related reasons)
+   * return data structure resembles: {
+   *    'reason description 1': 5,
+   *    'reason description 2': 9,
+   *    ...
+   * }
+   */
   async reportClockReasonsNonWork(reportData) {
     const employeeObj =
       Object.prototype.toString.call(reportData) === '[object Object]'
@@ -292,6 +300,14 @@ class Reports {
     return reasons;
   }
 
+  /**
+   * @returns Object of reasons:counts of log out reasons (for work related purposes)
+   * return data structure resembles: {
+   *    'reason description 1': 5,
+   *    'reason description 2': 9,
+   *    ...
+   * }
+   */
   async reportClockReasonsWork(reportData) {
     const employeeObj =
       Object.prototype.toString.call(reportData) === '[object Object]'
@@ -342,6 +358,30 @@ class Reports {
     }
   }
 
+  /**
+   *
+   * @param {*} reportData
+   * @returns results:
+   *  {
+   *    totalPerReason: {
+   *      'reason 1': 110,
+   *      'reason 2': 61
+   *      ...
+   *    }
+   *    totalPerDay: {
+   *      '0': 110,
+   *      '2': 61
+   *      ...
+   *    },
+   *    reasonPerDay: {
+   *      '0': {
+   *          'reason 1': 51,
+   *          'reason 2': 10,
+   *       },
+   *      ...
+   *    }
+   * }
+   */
   async reportClockedOutTimes(reportData) {
     const employeeObj =
       Object.prototype.toString.call(reportData) === '[object Object]'
@@ -397,6 +437,30 @@ class Reports {
     return results;
   }
 
+  /**
+   * 
+   * @param {*} reportData 
+   * {
+   *  'month': {
+   *    '0': {
+   *      onSite: 10,
+   *      offSite: 20
+   *    },
+   *    '9': {
+   *      onSite: 51,
+   *      offSite: 13
+   *    },
+   *    ...
+   *  },
+   *  'day': {
+   *    '0': {
+   *      onSite: 10,
+   *      offSite: 20
+   *    },
+   *    ...
+   *  }
+   * }
+   */
   async reportWorkHours(reportData) {
     const employeeObj =
       Object.prototype.toString.call(reportData) === '[object Object]'
@@ -549,6 +613,16 @@ class Reports {
     };
   }
 
+  /**
+   * 
+   * @param {*} reportData 
+   * {
+   *    '0': 10,
+   *    '1': 91,
+   *    ...
+   * }
+   * 
+   */
   async reportOvertimePerWeekDay(reportData) {
     const employeeObj =
       Object.prototype.toString.call(reportData) === '[object Object]'
