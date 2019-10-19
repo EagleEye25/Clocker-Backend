@@ -17,7 +17,7 @@ router.post("/reports", function(req, res) {
   let inTime = +(req.body.start || 0);
   let outTime = +(req.body.end || 0);
 
-  // @TODO: optional: return error if passed in filters are invalid
+  // @TODO: return error if passed in filters are invalid
   if (!inTime || inTime < 0) {
     inTime = 0;
   }
