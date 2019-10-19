@@ -1,15 +1,15 @@
-const DateFNGetMonth = require("date-fns/getMonth");
-const DateFNGetDay = require("date-fns/getDay");
-const DateFNStartOfDay = require("date-fns/startOfDay");
-const DateFNEndOfDay = require("date-fns/endOfDay");
-const DateFNDiffInMinutes = require("date-fns/differenceInMinutes");
-const DateFNEndOfMonth = require("date-fns/endOfMonth");
+const DateFNGetMonth = require('date-fns/getMonth');
+const DateFNGetDay = require('date-fns/getDay');
+const DateFNStartOfDay = require('date-fns/startOfDay');
+const DateFNEndOfDay = require('date-fns/endOfDay');
+const DateFNDiffInMinutes = require('date-fns/differenceInMinutes');
+const DateFNEndOfMonth = require('date-fns/endOfMonth');
 
 /* Load Calender Data Access Object */
-const reportsDao = require("../dao/reportsDao");
+const reportsDao = require('../dao/reportsDao');
 
 /* Load Controller Common function */
-const ControllerCommon = require("./common/controllerCommon");
+const ControllerCommon = require('./common/controllerCommon');
 
 /**
  * Calender Controller
@@ -44,20 +44,29 @@ class Reports {
     const results = {};
 
     const reports = [
-      // define async reports data here
+      // define async reports data
       {
-        name: "Count of non-work related clock outs",
+        name: 'Count of non-work related clock outs',
         fn: this.reportClockReasonsNonWork
       },
       {
-        name: "Count of work related clock outs",
+        name: 'Count of work related clock outs',
         fn: this.reportClockReasonsWork
       },
-      { name: "Rank of clock out reasons used", fn: this.reportReasonsRank },
-      { name: "Onsite vs OffSite Time logged", fn: this.reportWorkHours },
-      { name: "Overtime Per Day of Week", fn: this.reportOvertimePerWeekDay },
       {
-        name: "Time Spent per Clock-out Reason",
+        name: 'Rank of clock out reasons used',
+        fn: this.reportReasonsRank
+      },
+      {
+        name: 'Onsite vs OffSite Time logged',
+        fn: this.reportWorkHours
+      },
+      {
+        name: 'Overtime Per Day of Week',
+        fn: this.reportOvertimePerWeekDay
+      },
+      {
+        name: 'Time Spent per Clock-out Reason',
         fn: this.reportClockedOutTimes
       }
     ];
@@ -115,7 +124,6 @@ class Reports {
       calendars
     };
 
-    // NB!!! Be very careful to NOT modify the data from inside each of the report functions
     const reportData = await Promise.all(
       reports.map(r => {
         const fn = r.fn.bind(this);
@@ -123,19 +131,19 @@ class Reports {
       })
     );
 
-    for (let ii = 0; ii < reportData.length; ++ii) {
+    for (let k = 0; k < reportData.length; ++k) {
       let report = {
-        name: reports[ii].name,
+        name: reports[k].name,
         data: {}
       };
 
-      if (!(reportData[ii] instanceof Error)) {
-        report.data = reportData[ii];
+      if (!(reportData[k] instanceof Error)) {
+        report.data = reportData[k];
       } else {
-        console.log("Error occurred on report ", ii, " >>> ", reportData[ii]);
+        console.log('Error occurred on report ', k, ' >>> ', reportData[k]);
       }
 
-      results[`${ii}`] = report;
+      results[`${k}`] = report;
     }
 
     return results;
@@ -163,10 +171,10 @@ class Reports {
         };
       }
 
-      if (typeof emp.clock_in === "number" && emp.clock_in < earliest) {
+      if (typeof emp.clock_in === 'number' && emp.clock_in < earliest) {
         earliest = emp.clock_in;
       }
-      if (typeof emp.clock_out === "number" && emp.clock_out > latest) {
+      if (typeof emp.clock_out === 'number' && emp.clock_out > latest) {
         latest = emp.clock_out;
       }
       empData[empID].shifts.push({
@@ -260,11 +268,11 @@ class Reports {
 
   async reportClockReasonsNonWork(reportData) {
     const employeeObj =
-      Object.prototype.toString.call(reportData) === "[object Object]"
+      Object.prototype.toString.call(reportData) === '[object Object]'
         ? reportData.employees || {}
         : {};
     const employees =
-      Object.prototype.toString.call(employeeObj) === "[object Object]"
+      Object.prototype.toString.call(employeeObj) === '[object Object]'
         ? employeeObj.data || []
         : [];
 
@@ -286,11 +294,11 @@ class Reports {
 
   async reportClockReasonsWork(reportData) {
     const employeeObj =
-      Object.prototype.toString.call(reportData) === "[object Object]"
+      Object.prototype.toString.call(reportData) === '[object Object]'
         ? reportData.employees || {}
         : {};
     const employees =
-      Object.prototype.toString.call(employeeObj) === "[object Object]"
+      Object.prototype.toString.call(employeeObj) === '[object Object]'
         ? employeeObj.data || []
         : [];
 
@@ -313,11 +321,11 @@ class Reports {
 
   async reportReasonsRank(reportData) {
     const employeeObj =
-      Object.prototype.toString.call(reportData) === "[object Object]"
+      Object.prototype.toString.call(reportData) === '[object Object]'
         ? reportData.employees || {}
         : {};
     const employees =
-      Object.prototype.toString.call(employeeObj) === "[object Object]"
+      Object.prototype.toString.call(employeeObj) === '[object Object]'
         ? employeeObj.data || []
         : [];
 
@@ -336,11 +344,11 @@ class Reports {
 
   async reportClockedOutTimes(reportData) {
     const employeeObj =
-      Object.prototype.toString.call(reportData) === "[object Object]"
+      Object.prototype.toString.call(reportData) === '[object Object]'
         ? reportData.employees || {}
         : {};
     const employees =
-      Object.prototype.toString.call(employeeObj) === "[object Object]"
+      Object.prototype.toString.call(employeeObj) === '[object Object]'
         ? employeeObj.data || []
         : [];
 
@@ -352,11 +360,11 @@ class Reports {
 
     for (const employee of employees) {
       const shifts = employee.shifts || [];
-      for (let ii = 0; ii < shifts.length; ++ii) {
-        const shift = shifts[ii];
-        if (+shift.end > 0 && ii < shifts.length - 1) {
+      for (let k = 0; k < shifts.length; ++k) {
+        const shift = shifts[k];
+        if (+shift.end > 0 && k < shifts.length - 1) {
           const shiftEndDate = new Date(+shift.end);
-          const nextShiftStartDate = new Date(+shifts[ii + 1].start);
+          const nextShiftStartDate = new Date(+shifts[k + 1].start);
 
           const minOutPerDay = this.calculateMinutesWorkBetweenDates(
             nextShiftStartDate,
@@ -391,11 +399,11 @@ class Reports {
 
   async reportWorkHours(reportData) {
     const employeeObj =
-      Object.prototype.toString.call(reportData) === "[object Object]"
+      Object.prototype.toString.call(reportData) === '[object Object]'
         ? reportData.employees || {}
         : {};
     const employees =
-      Object.prototype.toString.call(employeeObj) === "[object Object]"
+      Object.prototype.toString.call(employeeObj) === '[object Object]'
         ? employeeObj.data || []
         : [];
 
@@ -405,8 +413,8 @@ class Reports {
     for (const employee of employees) {
       const shifts = employee.shifts || [];
 
-      for (let ii = 0; ii < shifts.length; ++ii) {
-        const shift = shifts[ii];
+      for (let k = 0; k < shifts.length; ++k) {
+        const shift = shifts[k];
         const shiftStart = new Date(+shift.start);
         const shiftEnd = new Date(+shift.end);
 
@@ -478,9 +486,9 @@ class Reports {
 
           // Calculate day and month off-site shift minutes worked
           if (shift.out_is_work_related) {
-            if (ii !== shifts.length - 1) {
+            if (k !== shifts.length - 1) {
               // there is another shift after this one, so the employee logged back in
-              const nextShift = new Date(+shifts[ii + 1].start);
+              const nextShift = new Date(+shifts[k + 1].start);
               const nextShiftMonthStr = `${DateFNGetMonth(nextShift)}`;
               const nextShiftDayStr = `${DateFNGetDay(nextShift)}`;
 
@@ -498,11 +506,6 @@ class Reports {
                 };
               }
 
-              // NB: There's a subtle bug in here (which is more relevant to the day calculations):
-              //  Calculation is based on consecutive days... which means that
-              //  if there are multiple days between the previous log out (for work purposes), and the next log in, then the offSite
-              //  work minutes calulated is added to the day in which the user signs in again, rather than being distributed over the in-between days.
-              //
               if (nextShiftMonthStr !== monthStr) {
                 resultsMonth[monthStr].offSite += DateFNDiffInMinutes(
                   DateFNEndOfMonth(shiftEnd),
@@ -548,16 +551,16 @@ class Reports {
 
   async reportOvertimePerWeekDay(reportData) {
     const employeeObj =
-      Object.prototype.toString.call(reportData) === "[object Object]"
+      Object.prototype.toString.call(reportData) === '[object Object]'
         ? reportData.employees || {}
         : {};
     const employees =
-      Object.prototype.toString.call(employeeObj) === "[object Object]"
+      Object.prototype.toString.call(employeeObj) === '[object Object]'
         ? employeeObj.data || []
         : [];
 
     const calendars =
-      Object.prototype.toString.call(reportData) === "[object Object]"
+      Object.prototype.toString.call(reportData) === '[object Object]'
         ? reportData.calendars || {}
         : {};
 
@@ -569,18 +572,18 @@ class Reports {
       const shifts = employee.shifts || [];
 
       const timeLoggedPerDay = {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0
+        '0': 0,
+        '1': 0,
+        '2': 0,
+        '3': 0,
+        '4': 0,
+        '5': 0,
+        '6': 0
       };
       let lastLogoutIsWork = false;
 
-      for (let ii = 0; ii < shifts.length; ++ii) {
-        const shift = shifts[ii];
+      for (let k = 0; k < shifts.length; ++k) {
+        const shift = shifts[k];
 
         let doCalcOvertime = true;
 
@@ -606,7 +609,7 @@ class Reports {
 
           if (lastLogoutIsWork) {
             const offsiteMinutesWorked = this.calculateMinutesWorkBetweenDates(
-              new Date(+shifts[ii - 1].end),
+              new Date(+shifts[k - 1].end),
               new Date(+shift.start)
             );
             const offsiteWorked = Object.keys(offsiteMinutesWorked);
@@ -620,17 +623,17 @@ class Reports {
           doCalcOvertime =
             doCalcOvertime &&
             (workedDays.length > 1 ||
-              (ii > 0 &&
+              (k > 0 &&
                 DateFNGetDay(new Date(+shift.start)) !==
-                  DateFNGetDay(new Date(+shifts[ii - 1].end))) ||
-              (ii < shifts.length - 2 &&
-                shift.calendarID !== shifts[ii + 1].calendarID));
+                  DateFNGetDay(new Date(+shifts[k - 1].end))) ||
+              (k < shifts.length - 2 &&
+                shift.calendarID !== shifts[k + 1].calendarID));
         } else {
           lastLogoutIsWork = false;
-          calIDStr = "";
+          calIDStr = '';
         }
 
-        if (ii === shifts.length - 1 || doCalcOvertime) {
+        if (k === shifts.length - 1 || doCalcOvertime) {
           const dayKeys = Object.keys(timeLoggedPerDay);
           for (const dayKey of dayKeys) {
             if (+timeLoggedPerDay[dayKey] > 0) {
@@ -663,21 +666,21 @@ class Reports {
 
       if (shift.spansSingleDay) {
         calDays[`${shift.startDay}`] +=
-          +shift.endTime.split(":").join("") -
-          +shift.startTime.split(":").join("");
+          +shift.endTime.split(':').join('') -
+          +shift.startTime.split(':').join('');
       } else {
         let endDay = shift.endDay;
         if (shift.endDay < shift.startDay) {
           endDay += 7;
         }
 
-        for (let ii = shift.startDay; ii <= endDay; ++ii) {
-          const actualDay = ii % 7;
+        for (let k = shift.startDay; k <= endDay; ++k) {
+          const actualDay = k % 7;
           let minutes = 0;
-          if (ii === shift.startDay) {
-            minutes = 2400 - +shift.startTime.split(":").join("");
-          } else if (ii === shift.endDay) {
-            minutes = +shift.endTime.split(":").join("");
+          if (k === shift.startDay) {
+            minutes = 2400 - +shift.startTime.split(':').join('');
+          } else if (k === shift.endDay) {
+            minutes = +shift.endTime.split(':').join('');
           } else {
             minutes = 24 * 60;
           }
@@ -712,7 +715,7 @@ class Reports {
 
         if (jj === shiftStartDay) {
           minutes = DateFNDiffInMinutes(DateFNEndOfDay(startDate), startDate);
-        } else if (ii === shift.endDay) {
+        } else if (k === shift.endDay) {
           minutes = DateFNDiffInMinutes(endDate, DateFNStartOfDay(endDate));
         } else {
           minutes = 24 * 60;

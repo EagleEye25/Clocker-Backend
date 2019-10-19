@@ -226,13 +226,9 @@ class Employee {
 	 */
 	// TODO: account for non changes
 	async deleteById(id) {
-		console.log('0');
 		await empCal.deleteByEmpID(id);
-		console.log('1')
 		await empCard.deleteByEmpID(id);
-		console.log('2')
 		await this.deleteClockingEmp(id);
-		console.log('3')
 		let sqlRequest = "DELETE FROM employee WHERE id=$id";
 		let sqlParams = {$id: id};
 		return this.common.run(sqlRequest, sqlParams);
