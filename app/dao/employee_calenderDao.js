@@ -89,6 +89,24 @@ class Employee_Calender {
 	};
 
 	/**
+	 * Tries to find an entity using its Id / Primary Key
+	 * @params id
+	 * @return entity
+	 */
+	async findByEmpId(id) {
+		let sqlRequest = "SELECT * FROM employee_calender WHERE id=$id";
+		let sqlParams = {$id: id};
+		const row = await this.common.findOne(sqlRequest, sqlParams)
+		.then(() => {
+			return true;
+		}).catch(() => {
+			return false
+		})
+
+		return row;
+	};
+
+	/**
 	 * Deletes an entity using its Id / Primary Key
 	 * @params id
 	 * returns database deletion status

@@ -208,6 +208,24 @@ class Employee {
 	};
 
 	/**
+	 * Tries to find an entity using its Id / Primary Key
+	 * @params id
+	 * @return entity
+	 */
+	async findByEmpId(id) {
+		let sqlRequest = "SELECT * FROM clocking WHERE id=$id";
+		let sqlParams = {$id: id};
+		const row = await this.common.findOne(sqlRequest, sqlParams)
+		.then(() => {
+			return true;
+		}).catch(() => {
+			return false
+		})
+
+		return row;
+	};
+
+	/**
 	 * Deletes an entity using its Id / Primary Key
 	 * @params id
 	 * returns database deletion status
@@ -215,8 +233,7 @@ class Employee {
 	async deleteClockingEmp(id) {
 		let sqlRequest = "DELETE FROM clocking WHERE employee_id=$id";
 		let sqlParams = {$id: id};
-		let k = await this.common.run(sqlRequest, sqlParams);
-		console.log(k);
+		return await this.common.run(sqlRequest, sqlParams);
 	};
 
 	/**
@@ -226,9 +243,12 @@ class Employee {
 	 */
 	// TODO: account for non changes
 	async deleteById(id) {
-		await empCal.deleteByEmpID(id);
-		await empCard.deleteByEmpID(id);
-		await this.deleteClockingEmp(id);
+		if (await empCal.findByEmpId(id)) {
+			await empCal.deleteByEmpID(id);
+		}
+		if (await empCard.findByEmpId(id)) {
+			await empCard.deleteByEmpID(id);
+		}
 		let sqlRequest = "DELETE FROM employee WHERE id=$id";
 		let sqlParams = {$id: id};
 		return this.common.run(sqlRequest, sqlParams);
