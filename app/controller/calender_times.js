@@ -49,8 +49,8 @@ class Calender_Times {
 	 * @params res
 	 * @return entity
 	 */
-	findUnassigned(res) {
-		this.dao.findUnassigned()
+	findUnassigned(req, res) {
+		this.dao.findUnassigned(req.params.calID)
 			.then(this.common.findSuccess(res))
 			.catch(this.common.findError(res));
 	};

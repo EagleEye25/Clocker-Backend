@@ -68,11 +68,11 @@ class Calender_Times {
 	 * Tries to find all entities
 	 * @return entity
 	 */
-	async findUnassigned() {
+	async findUnassigned(calID) {
 		let sqlRequest = `
 			SELECT *
 			FROM calender_times
-			WHERE calender_id IS NUll`;
+			WHERE calender_id !=` + calID.toString();
 		const rows = await this.common.findAll(sqlRequest);
 		let c_times = [];
 		for (const row of rows) {
