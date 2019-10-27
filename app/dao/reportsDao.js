@@ -159,7 +159,7 @@ class Reports {
               , c.clock_in
               , c.clock_out
               , r.description reason_description
-              , r.active work_related
+              , r.work work_related
       FROM    clocking c
               INNER JOIN  employee e
               ON          e.id = c.employee_id

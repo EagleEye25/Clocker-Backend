@@ -277,7 +277,7 @@ class Reports {
   async reportClockReasonsNonWork(reportData) {
     const employeeObj =
       Object.prototype.toString.call(reportData) === '[object Object]'
-        ? reportData.employees || {}
+        ? reportData.employeeData || {}
         : {};
     const employees =
       Object.prototype.toString.call(employeeObj) === '[object Object]'
@@ -290,10 +290,12 @@ class Reports {
       const shifts = employee.shifts || [];
       for (const shift of shifts) {
         if (!shift.out_is_work_related) {
-          if (!(shift.reason in reasons)) {
-            reasons[shift.reason] = 0;
+          if (shift.reason) {
+            if(!(shift.reason in reasons)) {
+              reasons[shift.reason] = 0;
+            }
+            reasons[shift.reason] += 1;
           }
-          reasons[shift.reason] += 1;
         }
       }
     }
@@ -311,7 +313,7 @@ class Reports {
   async reportClockReasonsWork(reportData) {
     const employeeObj =
       Object.prototype.toString.call(reportData) === '[object Object]'
-        ? reportData.employees || {}
+        ? reportData.employeeData || {}
         : {};
     const employees =
       Object.prototype.toString.call(employeeObj) === '[object Object]'
@@ -338,7 +340,7 @@ class Reports {
   async reportReasonsRank(reportData) {
     const employeeObj =
       Object.prototype.toString.call(reportData) === '[object Object]'
-        ? reportData.employees || {}
+        ? reportData.employeeData || {}
         : {};
     const employees =
       Object.prototype.toString.call(employeeObj) === '[object Object]'
@@ -356,6 +358,8 @@ class Reports {
         reasons[shift.reason] += 1;
       }
     }
+
+    return reasons;
   }
 
   /**
@@ -385,7 +389,7 @@ class Reports {
   async reportClockedOutTimes(reportData) {
     const employeeObj =
       Object.prototype.toString.call(reportData) === '[object Object]'
-        ? reportData.employees || {}
+        ? reportData.employeeData || {}
         : {};
     const employees =
       Object.prototype.toString.call(employeeObj) === '[object Object]'
@@ -407,8 +411,8 @@ class Reports {
           const nextShiftStartDate = new Date(+shifts[k + 1].start);
 
           const minOutPerDay = this.calculateMinutesWorkBetweenDates(
-            nextShiftStartDate,
-            shiftEndDate
+            shiftEndDate,
+            nextShiftStartDate
           );
 
           const dayKeys = Object.keys(minOutPerDay);
@@ -438,8 +442,8 @@ class Reports {
   }
 
   /**
-   * 
-   * @param {*} reportData 
+   *
+   * @param {*} reportData
    * {
    *  'month': {
    *    '0': {
@@ -464,7 +468,7 @@ class Reports {
   async reportWorkHours(reportData) {
     const employeeObj =
       Object.prototype.toString.call(reportData) === '[object Object]'
-        ? reportData.employees || {}
+        ? reportData.employeeData || {}
         : {};
     const employees =
       Object.prototype.toString.call(employeeObj) === '[object Object]'
@@ -510,13 +514,13 @@ class Reports {
               shiftEnd,
               DateFNEndOfMonth(shiftStart)
             );
-            if (!resultsMonth[`${+monthStr + 1}`]) {
-              resultsMonth[`${+monthStr + 1}`] = {
+            if (!resultsMonth[monthStr]) {
+              resultsMonth[monthStr] = {
                 onSite: 0,
                 offSite: 0
               };
             }
-            resultsMonth[`${+monthStr + 1}`].onSite += monthMinutes;
+            resultsMonth[monthStr].onSite += monthMinutes;
             monthMinutes = DateFNDiffInMinutes(
               DateFNEndOfMonth(shiftStart),
               shiftStart
@@ -530,13 +534,13 @@ class Reports {
               shiftEnd,
               DateFNEndOfDay(shiftStart)
             );
-            if (!resultsDay[`${+dayStr + 1}`]) {
-              resultsDay[`${+dayStr + 1}`] = {
+            if (!resultsDay[dayStr]) {
+              resultsDay[dayStr] = {
                 onSite: 0,
                 offSite: 0
               };
             }
-            resultsDay[`${+dayStr + 1}`].onSite += dayMinutes;
+            resultsDay[dayStr].onSite += dayMinutes;
             dayMinutes = DateFNDiffInMinutes(
               DateFNEndOfDay(shiftStart),
               shiftStart
@@ -582,23 +586,23 @@ class Reports {
               } else {
                 resultsMonth[monthStr].offSite += DateFNDiffInMinutes(
                   nextShift,
-                  DateFNEndOfMonth(shiftEnd)
+                  shiftEnd
                 );
               }
 
               if (nextShiftDayStr !== dayStr) {
                 resultsDay[dayStr].offSite += DateFNDiffInMinutes(
-                  DateFNEndOfMonth(shiftEnd),
+                  DateFNEndOfDay(shiftEnd),
                   shiftEnd
                 );
                 resultsDay[nextShiftDayStr].offSite += DateFNDiffInMinutes(
                   nextShift,
-                  DateFNEndOfMonth(shiftEnd)
+                  DateFNEndOfDay(shiftEnd)
                 );
               } else {
                 resultsDay[dayStr].offSite += DateFNDiffInMinutes(
                   nextShift,
-                  DateFNEndOfMonth(shiftEnd)
+                  shiftEnd
                 );
               }
             }
@@ -626,7 +630,7 @@ class Reports {
   async reportOvertimePerWeekDay(reportData) {
     const employeeObj =
       Object.prototype.toString.call(reportData) === '[object Object]'
-        ? reportData.employees || {}
+        ? reportData.employeeData || {}
         : {};
     const employees =
       Object.prototype.toString.call(employeeObj) === '[object Object]'
@@ -660,9 +664,9 @@ class Reports {
         const shift = shifts[k];
 
         let doCalcOvertime = true;
+        let calIDStr = `${+shift.calendarID}`;
 
         if (+shift.calendarID > 0 && +shift.end > 0) {
-          let calIDStr = `${+shift.calendarID}`;
 
           if (!calendarDayTimes[calIDStr]) {
             calendarDayTimes[calIDStr] = this.calculateCalendarMinutesPerDay(
@@ -675,7 +679,7 @@ class Reports {
             new Date(+shift.start),
             new Date(+shift.end)
           );
-          const workedDays = Object.keys(minutesWorked);
+          const workedDays = Object.keys(minutesWorkedPerDay);
 
           for (const day of workedDays) {
             timeLoggedPerDay[day] += minutesWorkedPerDay[day];
@@ -740,8 +744,7 @@ class Reports {
 
       if (shift.spansSingleDay) {
         calDays[`${shift.startDay}`] +=
-          +shift.endTime.split(':').join('') -
-          +shift.startTime.split(':').join('');
+        this.calculateDecimalTimeDiff(+shift.endTime.split(':').join(''), +shift.startTime.split(':').join(''));
       } else {
         let endDay = shift.endDay;
         if (shift.endDay < shift.startDay) {
@@ -752,11 +755,15 @@ class Reports {
           const actualDay = k % 7;
           let minutes = 0;
           if (k === shift.startDay) {
-            minutes = 2400 - +shift.startTime.split(':').join('');
+            minutes = this.calculateDecimalTimeDiff(2400, +shift.startTime.split(':').join(''));
           } else if (k === shift.endDay) {
-            minutes = +shift.endTime.split(':').join('');
+            minutes = this.calculateDecimalTimeDiff(+shift.endTime.split(':').join(''), 0);
           } else {
             minutes = 24 * 60;
+          }
+
+          if (!calDays[`${k}`]) {
+            calDays[`${k}`] = 0;
           }
           calDays[`${actualDay}`] += minutes;
         }
@@ -766,12 +773,18 @@ class Reports {
     return calDays;
   }
 
+  calculateDecimalTimeDiff(later, earlier) {
+    const a = later;
+    const b = earlier;
+    return (( (Math.floor(a/100)) + ((a%100)/60) ) - ( (Math.floor(b/100)) + ((b%100)/60) ))*60;
+  }
+
   calculateMinutesWorkBetweenDates(startDate, endDate) {
     const shiftStartDay = DateFNGetDay(startDate);
     const shiftEndDay = DateFNGetDay(endDate);
     let numericalEndDay = shiftEndDay;
 
-    minutesWorked = {};
+    const minutesWorked = {};
 
     if (shiftStartDay === shiftEndDay) {
       minutesWorked[`${shiftStartDay}`] = DateFNDiffInMinutes(
@@ -787,9 +800,13 @@ class Reports {
         const actualDay = jj % 7;
         let minutes = 0;
 
+        if (!minutesWorked[`${actualDay}`]) {
+          minutesWorked[`${actualDay}`] = 0;
+        }
+
         if (jj === shiftStartDay) {
           minutes = DateFNDiffInMinutes(DateFNEndOfDay(startDate), startDate);
-        } else if (k === shift.endDay) {
+        } else if (jj === numericalEndDay) {
           minutes = DateFNDiffInMinutes(endDate, DateFNStartOfDay(endDate));
         } else {
           minutes = 24 * 60;
